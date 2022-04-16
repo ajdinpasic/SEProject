@@ -26,5 +26,8 @@ class CoreModel {
             })
         });
     }
+    static async disconnect() {
+        con.end();
+    }
 }
 module.exports = CoreModel;
