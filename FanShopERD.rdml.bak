@@ -3,7 +3,7 @@
   <ModelProperties>
     <RowOne>0</RowOne>
     <SchemaVersion>8</SchemaVersion>
-    <LastEditTimeStamp>2022-04-16T18:32:41.1524+02:00</LastEditTimeStamp>
+    <LastEditTimeStamp>2022-04-03T00:09:21.7734715+02:00</LastEditTimeStamp>
     <Name>New Model</Name>
     <Author>DESKTOP-FFU2078\Ajdin</Author>
     <UniqueId>4d3aad52-32d8-419d-9f1b-e4e07f499623</UniqueId>
@@ -391,13 +391,6 @@
         <ModelTableColumnId>2</ModelTableColumnId>
         <Sequence>1</Sequence>
         <Name>product_id</Name>
-        <DataTypeName>int</DataTypeName>
-      </ModelTableColumn>
-      <ModelTableColumn>
-        <ModelTableId>7</ModelTableId>
-        <ModelTableColumnId>0</ModelTableColumnId>
-        <Sequence>2</Sequence>
-        <Name>quantity</Name>
         <DataTypeName>int</DataTypeName>
       </ModelTableColumn>
       <ModelTableIndex>
