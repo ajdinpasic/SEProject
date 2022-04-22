@@ -3,6 +3,11 @@ const mysql = require('mysql');
 const credentials = require('./../../config').mysqlCredentials;
 
 class CoreModel {
+
+    constructor(table) {
+        this.table = table;
+    }
+
     static async connect() {
         var con;
         return new Promise((resolve, reject) => {
