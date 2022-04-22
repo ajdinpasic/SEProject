@@ -7,7 +7,6 @@ class CoreModel {
     constructor(table) {
         this.table = table;
     }
-
     static async connect() {
         var con;
         return new Promise((resolve, reject) => {
@@ -43,6 +42,9 @@ class CoreModel {
                 resolve(res);
             });
         });
+    }
+    static async set_table(table) {
+        this.table = table;
     }
 
     static async execute_insert(table, entity) {
