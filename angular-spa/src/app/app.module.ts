@@ -10,6 +10,12 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ProductListService } from './services/product-list.service';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { CartService } from './services/cart.service';
+import { ProceedToCheckoutComponent } from './components/proceed-to-checkout/proceed-to-checkout.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+
 
 @NgModule({
   declarations: [
@@ -20,13 +26,16 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     ProductListComponent,
     FooterComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProductDetailComponent,
+    ProceedToCheckoutComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ProductListService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
