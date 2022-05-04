@@ -42,5 +42,19 @@ export class ProductListService {
   getProduct(id: number) {
     return this.products.find(item => item.productId == id)
   }
+
+  searchProduct(search: string) {
+    console.log(search)
+    if (search.length == 0 || !search) {return this.getAllProducts()}
+    let result = this.getAllProducts();
+    result = result.filter(item => item.name.toLowerCase().match(search.toLowerCase()))
+    this.setProducts(result)
+    return this.getAllProducts();
+  }
+
+  setProducts(value: any) {
+    this.products = value
+  }
+
   
 }
