@@ -15,6 +15,8 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { CartService } from './services/cart.service';
 import { ProceedToCheckoutComponent } from './components/proceed-to-checkout/proceed-to-checkout.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,11 +31,13 @@ import { RegistrationComponent } from './components/registration/registration.co
     CheckoutComponent,
     ProductDetailComponent,
     ProceedToCheckoutComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [ProductListService,CartService],
   bootstrap: [AppComponent]

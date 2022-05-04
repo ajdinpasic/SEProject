@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CartComponent } from "./components/cart/cart.component";
 import { CheckoutComponent } from "./components/checkout/checkout.component";
+import { LoginComponent } from "./components/login/login.component";
 import { ProductDetailComponent } from "./components/product-detail/product-detail.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
 import { RegistrationComponent } from "./components/registration/registration.component";
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'products/:id', component: ProductDetailComponent},
-  {path: 'register', component: RegistrationComponent}
+  {path: 'register', component: RegistrationComponent},
+  {path: 'login', component: LoginComponent},
 //   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 
