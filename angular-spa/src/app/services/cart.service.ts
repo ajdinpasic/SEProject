@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { Product } from 'src/resources/models/product.model';
+import { EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
+  @Output() cartUpdated : EventEmitter<boolean> = new EventEmitter();
+  count: number = 2;
   cartProducts: Product[] = [
     {"productId": 1,
     "name": 'T-shirt',
@@ -35,5 +38,12 @@ export class CartService {
 
   getCartItems() {
     return this.cartProducts;
+  }
+  addItemToCart(product: Product) {
+    this.cartProducts.push(product)
+    this.cartUpdated.emit(true);
+  }
+  countCartItems(): number {
+    return this.count;
   }
 }
