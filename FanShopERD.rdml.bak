@@ -3,7 +3,7 @@
   <ModelProperties>
     <RowOne>0</RowOne>
     <SchemaVersion>8</SchemaVersion>
-    <LastEditTimeStamp>2022-04-03T00:09:21.7734715+02:00</LastEditTimeStamp>
+    <LastEditTimeStamp>2022-05-07T20:38:08.5046665+02:00</LastEditTimeStamp>
     <Name>New Model</Name>
     <Author>DESKTOP-FFU2078\Ajdin</Author>
     <UniqueId>4d3aad52-32d8-419d-9f1b-e4e07f499623</UniqueId>
@@ -393,6 +393,13 @@
         <Name>product_id</Name>
         <DataTypeName>int</DataTypeName>
       </ModelTableColumn>
+      <ModelTableColumn>
+        <ModelTableId>7</ModelTableId>
+        <ModelTableColumnId>0</ModelTableColumnId>
+        <Sequence>2</Sequence>
+        <Name>quantity</Name>
+        <DataTypeName>int</DataTypeName>
+      </ModelTableColumn>
       <ModelTableIndex>
         <ModelTableId>7</ModelTableId>
         <ModelTableIndexId>0</ModelTableIndexId>
@@ -628,6 +635,7 @@
         <ModelTableColumnId>4</ModelTableColumnId>
         <Sequence>4</Sequence>
         <Name>is_admin</Name>
+        <AllowNull>true</AllowNull>
         <DataTypeName>bit</DataTypeName>
       </ModelTableColumn>
       <ModelTableColumn>

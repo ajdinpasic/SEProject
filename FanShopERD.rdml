@@ -3,7 +3,7 @@
   <ModelProperties>
     <RowOne>0</RowOne>
     <SchemaVersion>8</SchemaVersion>
-    <LastEditTimeStamp>2022-04-16T18:32:41.1524+02:00</LastEditTimeStamp>
+    <LastEditTimeStamp>2022-05-07T20:40:26.7964574+02:00</LastEditTimeStamp>
     <Name>New Model</Name>
     <Author>DESKTOP-FFU2078\Ajdin</Author>
     <UniqueId>4d3aad52-32d8-419d-9f1b-e4e07f499623</UniqueId>
@@ -632,15 +632,8 @@
       </ModelTableColumn>
       <ModelTableColumn>
         <ModelTableId>1</ModelTableId>
-        <ModelTableColumnId>4</ModelTableColumnId>
-        <Sequence>4</Sequence>
-        <Name>is_admin</Name>
-        <DataTypeName>bit</DataTypeName>
-      </ModelTableColumn>
-      <ModelTableColumn>
-        <ModelTableId>1</ModelTableId>
         <ModelTableColumnId>5</ModelTableColumnId>
-        <Sequence>5</Sequence>
+        <Sequence>4</Sequence>
         <Name>date_created</Name>
         <DataTypeName>datetime2</DataTypeName>
         <Scale>7</Scale>
