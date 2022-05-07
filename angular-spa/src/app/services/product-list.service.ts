@@ -34,22 +34,20 @@ export class ProductListService {
 
   constructor() { }
 
-  getAllProducts() {
-    // call api/search
-    return this.products;
-    }
-
   getProduct(id: number) {
     return this.products.find(item => item.productId == id)
   }
 
+  getAllProducts() {
+    return this.products;
+  }
+
   searchProduct(search: string) {
     console.log(search)
-    if (search.length == 0 || !search) {return this.getAllProducts()}
-    let result = this.getAllProducts();
+    if (search.length == 0 || !search) {return this.products}
+    let result = this.products
     result = result.filter(item => item.name.toLowerCase().match(search.toLowerCase()))
-    this.setProducts(result)
-    return this.getAllProducts();
+    return result;
   }
 
   setProducts(value: any) {
