@@ -50,8 +50,8 @@
                     <a (click) = visitProduct(item.productId) class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                         Detail</a>
                         <span class="dot" [ngStyle] = "{'background': item.color}"></span>
-                    <a href="" class="btn btn-sm text-dark p-0"><i
-                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                    <a class="btn btn-sm text-dark p-0" (click)="addToCart(item)"><i
+                         class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                 </div>
             </div>
         </div>

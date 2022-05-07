@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { Product } from 'src/resources/models/product.model';
 
@@ -12,12 +13,11 @@ export class ProductListComponent implements OnInit {
 
   products : Product[];
   productSearch: any;
-  constructor(private productListSvc: ProductListService, private router: Router) { 
+  constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router) { 
     
   }
 
   ngOnInit(): void {
-    console.log("hit")
     this.products = this.productListSvc.getAllProducts();
   }
 
@@ -28,5 +28,8 @@ export class ProductListComponent implements OnInit {
   onSearchChange(input: any ) {
     this.productSearch= input.value;
     this.products = this.productListSvc.searchProduct(input.value);
+  }
+  addToCart(product: Product) {
+    this.cartSvc.addItemToCart(product);
   }
 }

@@ -47,8 +47,9 @@
                         <a routerLink="/checkout" routerLinkActive="active" class="nav-item nav-link">Checkout</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Login</a>
-                        <a href="" class="nav-item nav-link">Register</a>
+                        <a routerLink="/login" *ngIf="!isUserAuth()"   class="nav-item nav-link">Login</a>
+                        <a routerLink="/register" *ngIf="!isUserAuth()" class="nav-item nav-link">Register</a>
+                        <a routerLink="/login" *ngIf="isUserAuth()" class="nav-item nav-link">Log out</a>
                     </div>
                 </div>
             </nav>
