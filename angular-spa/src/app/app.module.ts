@@ -17,7 +17,9 @@ import { ProceedToCheckoutComponent } from './components/proceed-to-checkout/pro
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
-
+import { AuthService } from './services/auth.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,11 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [ProductListService,CartService],
+  providers: [ProductListService,CartService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

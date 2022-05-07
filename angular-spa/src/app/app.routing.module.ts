@@ -6,15 +6,17 @@ import { LoginComponent } from "./components/login/login.component";
 import { ProductDetailComponent } from "./components/product-detail/product-detail.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
 import { RegistrationComponent } from "./components/registration/registration.component";
+import { AuthGuard } from "./guards/auth.guard";
+import { GuestGuard } from "./guards/guest.guard";
 
 const routes: Routes = [
   { path: '',   redirectTo: '/products', pathMatch: 'full' }, // redirect to `first-component`
-  { path: 'products', component: ProductListComponent },
-  {path: 'cart', component: CartComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'products/:id', component: ProductDetailComponent},
-  {path: 'register', component: RegistrationComponent},
-  {path: 'login', component: LoginComponent},
+  { path: 'products', component: ProductListComponent, canActivate: [AuthGuard], },
+  {path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
+  {path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard]},
+  {path: 'products/:id', component: ProductDetailComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegistrationComponent, canActivate: [GuestGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
 //   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 
