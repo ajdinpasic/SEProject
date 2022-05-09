@@ -1,3 +1,5 @@
 const credentials = require('./../../config').mysqlCredentials;
 const CoreModel = require('./CoreModel');
-CoreModel.connect();
+const SubcategoryModel = require('./SubcategoryModel');
+const SubcategoryService = require('./../services/SubcategoryService');
+SubcategoryService.receive_subcategory();

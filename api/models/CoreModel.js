@@ -33,15 +33,15 @@ class CoreModel {
     static async disconnect() {
         con.end();
     }
-    async execute_query(query, params) {
-        return new Promise(function (resolve, reject) {
-            global.con.query(query, params, (err, res) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(res);
-            });
+    static async execute_query(query, params) {
+
+        global.con.query(query, params, (err, res) => {
+            if (err) {
+                console.log('Error');
+            }
+            return (JSON.stringify(res));
         });
+
     }
     static async set_table(table) {
         this.table = table;
