@@ -6,7 +6,8 @@ CoreModel.connect();
 class SubcategoryService {
 
     static async receive_subcategory() {
-        SubcategoryModel.get_subcategories();
+        CoreModel.execute_query("SELECT * FROM subcategory", []);
+
     }
 
 

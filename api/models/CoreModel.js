@@ -39,7 +39,7 @@ class CoreModel {
             if (err) {
                 console.log('Error');
             }
-            return (JSON.stringify(res));
+            return JSON.stringify(res);
         });
 
     }

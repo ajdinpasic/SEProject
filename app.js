@@ -22,23 +22,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 /**
  * @swagger
- * /books:
- *   get:
- *     description: Get all books
- *     responses:
- *       200:
- *         description: Success
- * 
- */
-app.get('/books', (req, res) => {
-    res.send([{
-        id: 1,
-        title: "Harry Potter",
-    }])
-})
-/**
- * @swagger
- * /subcategory:
+ * /api/subcategory:
  *   get:
  *     summary: Returns the list of all the subcategories
  *     tags: [Subcategory]
@@ -50,9 +34,31 @@ app.get('/books', (req, res) => {
  *            
  *               
  */
-
-app.get('/subcategory', (req, res) => {
+app.get('/api/subcategory', (req, res) => {
     global.con.query('SELECT * FROM subcategory', [], (err, data) => {
+        if (err) {
+            console.log('Error');
+        }
+        res.send(data);
+    });
+})
+
+/**
+ * @swagger
+ * /api/search:
+ *   get:
+ *     summary: Returns the list of all the product with their subcategory name
+ *     tags: [Subcategory, Products]
+ *     responses:
+ *       200:
+ *         description: The list of the products with their subcategory name
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.get('/api/search', (req, res) => {
+    global.con.query('SELECT product.product_id,product.name,product.color,product.size,product.quantity,product.gender,product.available,product.image,product.description,subcategory.name, product.subcategory_id  FROM product JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id', [], (err, data) => {
         if (err) {
             console.log('Error');
         }
