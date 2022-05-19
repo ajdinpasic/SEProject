@@ -85,4 +85,4 @@ app.get('/api/search', (req, res) => {
         res.send(data);
     });
 })
-app.listen(5000, () => console.log('Listening on 5000'));
+app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
