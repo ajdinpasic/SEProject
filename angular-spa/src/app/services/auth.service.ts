@@ -8,9 +8,9 @@ import { GlobalHttpsCaller } from '../helpers/global.https';
 export class AuthService {
 
   constructor(private http: HttpClient) { 
-     this.http.get(GlobalHttpsCaller.apiRootProd+'search').subscribe((response:any) => {
-      console.log(response)
-    })
+    //  this.http.get(GlobalHttpsCaller.apiRootProd+'search').subscribe((response:any) => {
+    //   console.log(response)
+    // })
   }
 
   isUserAuthorized() {
