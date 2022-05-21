@@ -4,7 +4,13 @@
     border-radius: 50%;
     display: inline-block;
 }
+
 .sold-out {
 filter: blur(2px);
 -webkit-filter: blur(2px);
+}
+
+.disable-anchor {
+pointer-events:none;
+text-decoration: line-through;
 }

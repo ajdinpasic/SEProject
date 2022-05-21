@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { Product } from 'src/resources/models/product.model';
@@ -13,22 +14,42 @@ export class ProductListComponent implements OnInit {
 
   products : Product[];
   productSearch: any;
-  constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router) { 
+  response: Product[];
+  constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router, private toastr: ToastrService) { 
     
   }
 
   ngOnInit(): void {
-    this.products = this.productListSvc.getAllProducts();
+    // this.productListSvc.getAllProducts().subscribe((response:Product[]) => {
+    //   // this.productListSvc.setProductsForSearch(response)
+    //   this.products = response;
+    //   this.response = response;
+    // })
+    this.productListSvc.getAllProducts().subscribe({
+      next: (response:Product[]) => {
+      this.response = response
+      this.products = response},
+      error: (err) => this.toastr.error('No products to display')
+    });
   }
 
 
   visitProduct(id: number) {
     this.router.navigate(['/products',id])
   }
+
   onSearchChange(input: any ) {
     this.productSearch= input.value;
-    this.products = this.productListSvc.searchProduct(input.value);
+    if (this.productSearch.length == 0 || !this.productSearch.length) {
+      this.productSearch = null; 
+      this.products = this.response
+    } else {
+      let result = this.response.filter(item => item.name.toLowerCase().match(this.productSearch.toLowerCase()))
+      this.products = result;
+    }
+    
   }
+
   addToCart(product: Product) {
     this.cartSvc.addItemToCart(product);
   }
