@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-navigation',
@@ -8,7 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private AuthSvc: AuthService) {
+   categories: any;
+  constructor(private AuthSvc: AuthService, private navSvc: NavigationServiceService,private toastr: ToastrService) {
 
    }
    
@@ -17,6 +20,12 @@ export class NavigationComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.navSvc.getAllCategories().subscribe({
+      next: (response:any) => 
+      this.categories = response,
+      error: (err) => this.toastr.error('No categories to display')
+    });
+    
   }
 
 }
