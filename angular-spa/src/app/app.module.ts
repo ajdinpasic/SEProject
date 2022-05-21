@@ -20,6 +20,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DropDownDirective } from './directives/drop-down-directive';
+import { NavigationServiceService } from './services/navigation-service.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductDetailComponent,
     ProceedToCheckoutComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    DropDownDirective
   ],
   imports: [
     BrowserModule,
@@ -42,8 +47,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [ProductListService,CartService,AuthService],
+  providers: [ProductListService,CartService,AuthService,NavigationServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
