@@ -8,7 +8,13 @@ const CoreModel = require('./api/models/CoreModel');
 const app = express();
 var url = require('url');
 
-
+single_value = function (fn) {
+    return function (e, r) {
+        for (var k in r)
+            break;
+        return fn(e, k === undefined ? undefined : r[k]);
+    }
+}
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
@@ -65,7 +71,13 @@ app.get('/api/subcategory', (req, res) => {
         res.send(data);
     });
 })
+var rand = function () {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
 
+var token = function () {
+    return rand() + rand(); // to make it longer
+};
 /**
  * @swagger
  * /api/search:
@@ -120,30 +132,57 @@ app.get('/api/product', (req, res) => {
 
 /**
  * @swagger
- * /api/product/:
- *   get:
- *     summary: Get product by ID
- *     tags: [Products]
+ * /api/login/:
+ *   post:
+ *     summary: Log in to the platform
+ *     tags: [Login and registration]
  *     responses:
  *       200:
- *         description: Get product by ID
+ *         description: Log in to the platform
  *         content:
  *           application/json
  *            
  *               
  */
-app.get('/api/cart', (req, res) => {
+app.post('/api/login', (req, res) => {
     var parts = url.parse(req.url, true);
     var query = parts.query;
 
-    var query_id = req.query.id;
-    let querytt = 'SELECT product.name, cart_item.date_added, cart_item.date_updated, cart_item.current_quantity FROM product JOIN cart_item ON product.product_id=cart_item.product_id WHERE product.product_id=1;';
-    console.log(querytt);
-    global.con.query(querytt, [], (err, data) => {
+    var query_email = req.query.email;
+    var query_password = req.query.password;
+    let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password + "'";
+    global.con.query(querytt, (err, data) => {
         if (err) {
             res.send(err);
         }
-        res.send(data);
+        const result = Object.values(JSON.parse(JSON.stringify(data)));
+        if (result.length === 0) {
+            res.send("User not found");
+        }
+        let email = "";
+        result.forEach(function (item) {
+            email = item.email;
+        });
+        let user_token = token();
+        let querytxt = 'UPDATE user SET token=' + "'" + user_token + "'" + 'WHERE email=' + "'" + email + "'";
+
+        global.con.query(querytxt, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(user_token);
+
+
+
+
+
+        });
+
+
+
+
     });
 })
+
+
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
