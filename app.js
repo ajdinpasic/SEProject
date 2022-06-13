@@ -179,6 +179,53 @@ app.post('/api/login', (req, res) => {
 
     });
 })
+/**
+ * @swagger
+ * /api/login/:
+ *   post:
+ *     summary: Log in to the platform
+ *     tags: [Login and registration]
+ *     responses:
+ *       200:
+ *         description: Log in to the platform
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/logout', (req, res) => {
+    var parts = url.parse(req.url, true);
+    var query = parts.query;
 
+    var query_email = req.query.email;
+    let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'";
+    global.con.query(querytt, (err, data) => {
+        if (err) {
+            res.send(err);
+        }
+        const result = Object.values(JSON.parse(JSON.stringify(data)));
+        if (result.length === 0) {
+            res.send("User not found");
+        }
+        let email = "";
+        result.forEach(function (item) {
+            email = item.email;
+        });
+        let user_token = token();
+        let querytxt = 'UPDATE user SET token=null';
+
+        global.con.query(querytxt, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send("Log out successfully");
+
+        });
+
+
+
+
+    });
+})
 
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
