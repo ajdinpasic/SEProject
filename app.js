@@ -172,10 +172,6 @@ app.post('/api/login', (req, res) => {
             }
             res.send(user_token);
 
-
-
-
-
         });
 
 
