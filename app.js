@@ -5,9 +5,14 @@ const router = express.Router();
 const SubcategoryService = require('./api/services/SubcategoryService');
 const SubcategoryModel = require('./api/models/SubcategoryModel');
 const CoreModel = require('./api/models/CoreModel');
+const UserModel = require('./api/models/UserModel');
+
 const app = express();
 var url = require('url');
-
+app.use(express.urlencoded({
+    extended: false
+}));
+app.use(express.json());
 single_value = function (fn) {
     return function (e, r) {
         for (var k in r)
@@ -132,6 +137,55 @@ app.get('/api/product', (req, res) => {
 
 /**
  * @swagger
+ * /api/register/:
+ *   post:
+ *     summary: Register to the platform
+ *     tags: [Login and registration]
+ *     responses:
+ *       200:
+ *         description: Register to the platform
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/register', (req, res) => {
+    var first_name = req.body.first_name;
+    var last_name = req.body.last_name;
+    var password = req.body.password;
+    let date_ob = new Date();
+    var email = req.body.email;
+
+    let querytt = "SELECT * FROM user WHERE email=" + "'" + email + "'";
+    global.con.query(querytt, (err, data) => {
+        if (err) {
+            res.send(err);
+        }
+        const result = Object.values(JSON.parse(JSON.stringify(data)));
+        if (result.length === 0) {
+            let query_insert = "INSERT INTO user (user_id, first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?,?)";
+            global.con.query(query_insert, ['2', first_name, last_name, password, date_ob, email, (err, data) => {
+                if (err) {
+                    res.send(err);
+                }
+                res.send(req.body);
+            }])
+
+        } else {
+            res.send("User already exists with this email");
+        }
+
+
+
+
+
+    });
+
+
+})
+
+/**
+ * @swagger
  * /api/login/:
  *   post:
  *     summary: Log in to the platform
@@ -145,11 +199,9 @@ app.get('/api/product', (req, res) => {
  *               
  */
 app.post('/api/login', (req, res) => {
-    var parts = url.parse(req.url, true);
-    var query = parts.query;
+    var query_email = req.body.email;
+    var query_password = req.body.password;
 
-    var query_email = req.query.email;
-    var query_password = req.query.password;
     let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
@@ -178,10 +230,11 @@ app.post('/api/login', (req, res) => {
 
 
     });
+
 })
 /**
  * @swagger
- * /api/login/:
+ * /api/logout/:
  *   post:
  *     summary: Log in to the platform
  *     tags: [Login and registration]
