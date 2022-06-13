@@ -117,4 +117,33 @@ app.get('/api/product', (req, res) => {
         res.send(data);
     });
 })
+
+/**
+ * @swagger
+ * /api/product/:
+ *   get:
+ *     summary: Get product by ID
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Get product by ID
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.get('/api/cart', (req, res) => {
+    var parts = url.parse(req.url, true);
+    var query = parts.query;
+
+    var query_id = req.query.id;
+    let querytt = 'SELECT product.name, cart_item.date_added, cart_item.date_updated, cart_item.current_quantity FROM product JOIN cart_item ON product.product_id=cart_item.product_id WHERE product.product_id=1;';
+    console.log(querytt);
+    global.con.query(querytt, [], (err, data) => {
+        if (err) {
+            res.send(err);
+        }
+        res.send(data);
+    });
+})
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
