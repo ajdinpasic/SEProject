@@ -326,5 +326,23 @@ app.put('/api/editProduct', (req, res) => {
 
 })
 
+app.get('/api/deleteProduct', (req, res) => {
+
+    var cart_id = req.body.cart_id;
+
+
+
+    let query = "DELETE FROM cart_item WHERE cart_id=" + "'" + cart_id + "'";
+    global.con.query(query, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send("Product successfully deleted");
+        }
+    });
+
+})
+
+
 
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
