@@ -79,7 +79,6 @@ app.get('/api/subcategory', (req, res) => {
 var rand = function () {
     return Math.random().toString(36).substr(2); // remove `0.`
 };
-
 var token = function () {
     return rand() + rand(); // to make it longer
 };
@@ -105,7 +104,6 @@ app.get('/api/search', (req, res) => {
         res.send(data);
     });
 })
-
 /**
  * @swagger
  * /api/product/:
@@ -123,10 +121,8 @@ app.get('/api/search', (req, res) => {
 app.get('/api/product', (req, res) => {
     var parts = url.parse(req.url, true);
     var query = parts.query;
-
     var query_id = req.query.id;
     let querytt = 'SELECT * FROM product WHERE product_id=' + query_id;
-
     global.con.query(querytt, [], (err, data) => {
         if (err) {
             res.send(err);
@@ -155,7 +151,6 @@ app.post('/api/register', (req, res) => {
     var password = req.body.password;
     let date_ob = new Date();
     var email = req.body.email;
-
     let querytt = "SELECT * FROM user WHERE email=" + "'" + email + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
@@ -174,16 +169,8 @@ app.post('/api/register', (req, res) => {
         } else {
             res.send("User already exists with this email");
         }
-
-
-
-
-
     });
-
-
 })
-
 /**
  * @swagger
  * /api/login/:
@@ -201,7 +188,6 @@ app.post('/api/register', (req, res) => {
 app.post('/api/login', (req, res) => {
     var query_email = req.body.email;
     var query_password = req.body.password;
-
     let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
@@ -225,12 +211,7 @@ app.post('/api/login', (req, res) => {
             res.send(user_token);
 
         });
-
-
-
-
     });
-
 })
 /**
  * @swagger
@@ -247,10 +228,7 @@ app.post('/api/login', (req, res) => {
  *               
  */
 app.post('/api/logout', (req, res) => {
-    var parts = url.parse(req.url, true);
-    var query = parts.query;
-
-    var query_email = req.query.email;
+    var query_email = req.body.email;
     let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
@@ -266,7 +244,6 @@ app.post('/api/logout', (req, res) => {
         });
         let user_token = token();
         let querytxt = 'UPDATE user SET token=null';
-
         global.con.query(querytxt, (err, data) => {
             if (err) {
                 res.send(err);
@@ -274,20 +251,14 @@ app.post('/api/logout', (req, res) => {
             res.send("Log out successfully");
 
         });
-
-
-
-
     });
 })
 
 app.post('/api/addProduct', (req, res) => {
-
     var date_added = new Date();
     var current_quantity = req.body.current_quantity;
     var product_id = req.body.product_id;
     var user_id = req.body.user_id;
-
     let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
     global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
         if (err) {
@@ -312,9 +283,6 @@ app.put('/api/editProduct', (req, res) => {
     var date_updated = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var cart_id = req.body.cart_id;
     var current_quantity = req.body.current_quantity;
-
-
-
     let querytt = 'UPDATE cart_item SET current_quantity=' + "'" + current_quantity + "', date_updated=" + "'" + date_updated + "' WHERE cart_id=" + "'" + cart_id + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
@@ -325,13 +293,8 @@ app.put('/api/editProduct', (req, res) => {
     });
 
 })
-
 app.get('/api/deleteProduct', (req, res) => {
-
     var cart_id = req.body.cart_id;
-
-
-
     let query = "DELETE FROM cart_item WHERE cart_id=" + "'" + cart_id + "'";
     global.con.query(query, (err, data) => {
         if (err) {
@@ -342,7 +305,6 @@ app.get('/api/deleteProduct', (req, res) => {
     });
 
 })
-
 app.get('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
     let query = "SELECT * FROM cart_item WHERE user_id=" + user_id;
@@ -353,10 +315,5 @@ app.get('/api/cart', (req, res) => {
             res.send(JSON.stringify(data));
         }
     });
-
 })
-
-
-
-
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
