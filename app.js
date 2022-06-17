@@ -343,6 +343,20 @@ app.get('/api/deleteProduct', (req, res) => {
 
 })
 
+app.get('/api/cart', (req, res) => {
+    var user_id = req.body.user_id;
+    let query = "SELECT * FROM cart_item WHERE user_id=" + user_id;
+    global.con.query(query, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(JSON.stringify(data));
+        }
+    });
+
+})
+
+
 
 
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
