@@ -284,13 +284,12 @@ app.post('/api/logout', (req, res) => {
 app.post('/api/addProduct', (req, res) => {
 
     var date_added = new Date();
-    var date_updated = "null";
     var current_quantity = req.body.current_quantity;
     var product_id = req.body.product_id;
     var user_id = req.body.user_id;
 
-    let querytt = 'INSERT INTO cart_item (date_added,date_updated,current_quantity,product_id,user_id) VALUES (?,?,?,?,?)';
-    global.con.query(querytt, [date_added, date_updated, current_quantity, product_id, user_id], (err, data) => {
+    let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
+    global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
         if (err) {
             res.send(err);
         }
@@ -308,7 +307,24 @@ app.post('/api/addProduct', (req, res) => {
         });
     });
 })
+app.put('/api/editProduct', (req, res) => {
 
+    var date_updated = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    var cart_id = req.body.cart_id;
+    var current_quantity = req.body.current_quantity;
+
+
+
+    let querytt = 'UPDATE cart_item SET current_quantity=' + "'" + current_quantity + "', date_updated=" + "'" + date_updated + "' WHERE cart_id=" + "'" + cart_id + "'";
+    global.con.query(querytt, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send("Product successfully updated");
+        }
+    });
+
+})
 
 
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
