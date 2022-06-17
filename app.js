@@ -281,4 +281,34 @@ app.post('/api/logout', (req, res) => {
     });
 })
 
+app.post('/api/addProduct', (req, res) => {
+
+    var date_added = new Date();
+    var date_updated = "null";
+    var current_quantity = req.body.current_quantity;
+    var product_id = req.body.product_id;
+    var user_id = req.body.user_id;
+
+    let querytt = 'INSERT INTO cart_item (date_added,date_updated,current_quantity,product_id,user_id) VALUES (?,?,?,?,?)';
+    global.con.query(querytt, [date_added, date_updated, current_quantity, product_id, user_id], (err, data) => {
+        if (err) {
+            res.send(err);
+        }
+        let querytxt = 'SELECT * FROM cart_item WHERE product_id=' + "'" + product_id + "'";
+        global.con.query(querytxt, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            const result = Object.values(JSON.parse(JSON.stringify(data)));
+            if (result.length === 0) {
+                res.send("Product wasn't added");
+            } else {
+                res.send("Product successfully added");
+            }
+        });
+    });
+})
+
+
+
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
