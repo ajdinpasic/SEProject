@@ -158,8 +158,8 @@ app.post('/api/register', (req, res) => {
         }
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
-            let query_insert = "INSERT INTO user (user_id, first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?,?)";
-            global.con.query(query_insert, ['2', first_name, last_name, password, date_ob, email, (err, data) => {
+            let query_insert = "INSERT INTO user (first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?)";
+            global.con.query(query_insert, [first_name, last_name, password, date_ob, email, (err, data) => {
                 if (err) {
                     res.send(err);
                 }
