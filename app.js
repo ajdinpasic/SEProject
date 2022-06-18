@@ -422,4 +422,65 @@ app.post('/api/countCart', (req, res) => {
         }
     });
 })
+/**
+ * @swagger
+ * /api/addReview/:
+ *   post:
+ *     summary: Add new review 
+ *     tags: [Review]
+ *     responses:
+ *       200:
+ *         description: Add new review
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/addReview', (req, res) => {
+    var user_id = req.body.user_id;
+    var product_id = req.body.product_id;
+    var description = req.body.description;
+    var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+
+    let query = "INSERT INTO review (description, date_created,user_id,product_id) VALUES (?,?,?,?)";
+    global.con.query(query, [description, date, user_id, product_id], (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json({
+                "status": 200
+            })
+        }
+
+    });
+})
+/**
+ * @swagger
+ * /api/review/:product_id/:
+ *   get:
+ *     summary: Get review by user ID
+ *     tags: [Review]
+ *     responses:
+ *       200:
+ *         description: Get review by user ID
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.get('/api/review/:product_id', (req, res) => {
+    var product_id = req.params.product_id;
+    let query = "SELECT * FROM review WHERE product_id=" + product_id;
+    global.con.query(query, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+
+    });
+})
+
+
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
