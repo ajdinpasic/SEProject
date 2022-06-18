@@ -266,7 +266,7 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM product WHERE product_id" = "'" + product_id + "'";
+    let query1 = "SELECT * FROM product WHERE product_id ="  + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.send(err);
