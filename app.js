@@ -34,8 +34,8 @@ const swaggerOptions = {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.setHeader('Access-Control-Allow-Origin', 'https://fan-shop.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:4200');
+    //  res.setHeader('Access-Control-Allow-Origin','https://fan-shop.vercel.app');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -97,7 +97,7 @@ var token = function () {
  *               
  */
 app.get('/api/search', (req, res) => {
-    global.con.query('SELECT product.product_id,product.name,product.color,product.size,product.quantity,product.gender,product.available,product.image,product.description,subcategory.name, product.subcategory_id  FROM product JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id', [], (err, data) => {
+    global.con.query('SELECT product.*,subcategory.namee, product.subcategory_id  FROM product JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id', [], (err, data) => {
         if (err) {
             console.log('Error');
         }
@@ -118,11 +118,11 @@ app.get('/api/search', (req, res) => {
  *            
  *               
  */
-app.get('/api/product', (req, res) => {
+app.get('/api/product/:product_id', (req, res) => {
     var parts = url.parse(req.url, true);
     var query = parts.query;
-    var query_id = req.query.id;
-    let querytt = 'SELECT * FROM product WHERE product_id=' + query_id;
+    var query_id = req.params.product_id;
+    let querytt = "SELECT subcategory.namee, product.* FROM subcategory JOIN product ON product.subcategory_id = subcategory.subcategory_id WHERE product_id=" + query_id;
     global.con.query(querytt, [], (err, data) => {
         if (err) {
             res.send(err);
@@ -259,21 +259,27 @@ app.post('/api/addProduct', (req, res) => {
     var current_quantity = req.body.current_quantity;
     var product_id = req.body.product_id;
     var user_id = req.body.user_id;
+    /*
+    iz bodija primis product id
+    prvo uradi query select * from product where product id = product_id
+    ako je rezultat null odradi ovo postojecu logiku
+    ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
+    */
     let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
     global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
         if (err) {
             res.send(err);
         }
-        let querytxt = 'SELECT * FROM cart_item WHERE product_id=' + "'" + product_id + "'";
+        let querytxt = 'SELECT * FROM cart_item WHERE product_id=' +  product_id;
         global.con.query(querytxt, (err, data) => {
             if (err) {
                 res.send(err);
             }
             const result = Object.values(JSON.parse(JSON.stringify(data)));
             if (result.length === 0) {
-                res.send("Product wasn't added");
+                res.send(data);
             } else {
-                res.send("Product successfully added");
+                res.send(err);
             }
         });
     });
