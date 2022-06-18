@@ -340,4 +340,16 @@ app.get('/api/cart', (req, res) => {
         }
     });
 })
+app.post('/api/countCart', (req, res) => {
+    var cart_id = req.body.cart_id;
+
+    let query = "SELECT COUNT(user_id) * FROM cart_item WHERE cart_id=" + cart_id;
+    global.con.query(query, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+})
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
