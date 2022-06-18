@@ -279,7 +279,6 @@ app.post('/api/addProduct', (req, res) => {
     });
 })
 app.put('/api/editProduct', (req, res) => {
-
     var date_updated = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var cart_id = req.body.cart_id;
     var current_quantity = req.body.current_quantity;
@@ -291,7 +290,6 @@ app.put('/api/editProduct', (req, res) => {
             res.send("Product successfully updated");
         }
     });
-
 })
 app.get('/api/deleteProduct', (req, res) => {
     var cart_id = req.body.cart_id;
