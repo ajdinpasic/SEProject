@@ -24,12 +24,13 @@ export class ProductListComponent implements OnInit {
     //   // this.productListSvc.setProductsForSearch(response)
     //   this.products = response;
     //   this.response = response;
-    // })
+    // }) 
+ -
     this.productListSvc.getAllProducts().subscribe({
       next: (response:Product[]) => {
-      this.response = response
+      this.response = response;
       this.products = response},
-      error: (err) => this.toastr.error('No products to display')
+      error: (err) => this.toastr.error('Something went wrong!')
     });
   }
 

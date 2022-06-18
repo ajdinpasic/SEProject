@@ -36,7 +36,7 @@
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
             
-                    <img (click) = "visitProduct(item.productId)" [ngClass]="{'sold-out':item.quantity == 0}" class="img-fluid w-100" src="{{item.image}}" alt="">
+                    <img [ngClass]="{'sold-out':item.quantity == 0}" class="img-fluid w-100" src="{{item.image}}" alt="">
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3" [ngStyle]="{'border': '2px solid' + item.color}">
                     <h6 class="text-truncate mb-3">{{item.name}}</h6>
@@ -47,7 +47,7 @@
                     <p style="font-weight: bold;">{{item.size}}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a (click) = visitProduct(item.productId) class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
+                    <a (click) = visitProduct(item.product_id) class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                         Detail</a>
                         <span class="dot" [ngStyle] = "{'background': item.color}"></span>
                     <a class="btn btn-sm text-dark p-0" (click)="addToCart(item)" [ngClass]="{'disable-anchor':item.quantity <= 0}"><i
