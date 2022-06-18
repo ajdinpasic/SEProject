@@ -266,7 +266,7 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM product WHERE product_id" = "'" + product_id + "'";
+    let query1 = "SELECT * FROM product WHERE product_id ="  + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.send(err);
@@ -317,21 +317,21 @@ app.put('/api/editProduct', (req, res) => {
         }
     });
 })
-app.get('/api/deleteProduct', (req, res) => {
-    var cart_id = req.body.cart_id;
+app.delete('/api/deleteProduct/:cart_id', (req, res) => {
+    var cart_id = req.params.cart_id;
     let query = "DELETE FROM cart_item WHERE cart_id=" + "'" + cart_id + "'";
     global.con.query(query, (err, data) => {
         if (err) {
             res.send(err);
         } else {
-            res.send("Product successfully deleted");
+            res.send(cart_id);
         }
     });
 
 })
-app.get('/api/cart', (req, res) => {
+app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
-    let query = "SELECT * FROM cart_item WHERE user_id=" + user_id;
+    let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + user_id;
     global.con.query(query, (err, data) => {
         if (err) {
             res.send(err);
