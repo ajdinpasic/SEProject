@@ -13,6 +13,7 @@
                     </tr>
                 </thead>
                 <tbody class="align-middle">
+                    <h3 *ngIf="cartProducts.length == 0" style="color: red;">No products present</h3>
                     <tr *ngFor = "let item of cartProducts" >
                         <td class="align-middle"><img src="{{item.image}}" alt="" style="width: 50px;"> {{item.name}}</td>
                         <td class="align-middle">${{item.price}}</td>
@@ -23,8 +24,8 @@
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                    value="1">
+                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.current_quantity}}"
+                                    disabled>
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary btn-plus">
                                         <i class="fa fa-plus"></i>
@@ -32,14 +33,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">{{item.price*2}}</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
+                        <td class="align-middle">${{item.price*item.current_quantity}}</td>
+                        <td class="align-middle" (click)="removeItem(item)"><button class="btn btn-sm btn-primary"><i
                                     class="fa fa-times"></i></button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" *ngIf="cartProducts.length > 0">
             <app-proceed-to-checkout></app-proceed-to-checkout>
         </div>
     </div>
