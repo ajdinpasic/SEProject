@@ -34,7 +34,7 @@ const swaggerOptions = {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin','http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     //  res.setHeader('Access-Control-Allow-Origin','https://fan-shop.vercel.app');
 
     // Request methods you wish to allow
@@ -265,27 +265,46 @@ app.post('/api/addProduct', (req, res) => {
     ako je rezultat null odradi ovo postojecu logiku
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
-    let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
-    global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
+
+    let query1 = "SELECT * FROM product WHERE product_id" = "'" + product_id + "'";
+    global.con.query(query1, (err, data) => {
         if (err) {
             res.send(err);
         }
-        let querytxt = 'SELECT * FROM cart_item WHERE product_id=' +  product_id;
-        global.con.query(querytxt, (err, data) => {
+        const result = Object.values(JSON.parse(JSON.stringify(data)));
+        if (result.length > 0) {
+            let query_ajdin = 'UPDATE product SET current_quantity=' + "'" + current_quantity + "' WHERE product_id=" + "'" + product_id + "'";
+            global.con.query(query_ajdin, (err, data) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send(data);
+                }
+            });
+        }
+        let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
+        global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
             if (err) {
                 res.send(err);
             }
-            const result = Object.values(JSON.parse(JSON.stringify(data)));
-            if (result.length === 0) {
-                res.send(data);
-            } else {
-                res.send(err);
-            }
+            let querytxt = 'SELECT * FROM cart_item WHERE product_id=' + product_id;
+            global.con.query(querytxt, (err, data) => {
+                if (err) {
+                    res.send(err);
+                }
+                const result = Object.values(JSON.parse(JSON.stringify(data)));
+                if (result.length === 0) {
+                    res.send(data);
+                } else {
+                    res.send(err);
+                }
+            });
         });
+
     });
+
 })
 app.put('/api/editProduct', (req, res) => {
-
     var date_updated = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var cart_id = req.body.cart_id;
     var current_quantity = req.body.current_quantity;
@@ -297,7 +316,6 @@ app.put('/api/editProduct', (req, res) => {
             res.send("Product successfully updated");
         }
     });
-
 })
 app.delete('/api/deleteProduct/:cart_id', (req, res) => {
     var cart_id = req.params.cart_id;
