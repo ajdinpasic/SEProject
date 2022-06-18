@@ -370,20 +370,7 @@ app.delete('/api/deleteProduct/:cart_id', (req, res) => {
     });
 
 })
-/**
- * @swagger
- * /api/cart/
- *   get:
- *     summary: Get product name
- *     tags: [Cart, Product]
- *     responses:
- *       200:
- *         description: Get product name
- *         content:
- *           application/json
- *            
- *               
- */
+
 app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
     let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + user_id;
@@ -395,29 +382,17 @@ app.post('/api/cart', (req, res) => {
         }
     });
 })
-/**
- * @swagger
- * /api/countCart/
- *   get:
- *     summary: Get number of items in cart
- *     tags: [Cart]
- *     responses:
- *       200:
- *         description: Get number of items in cart
- *         content:
- *           application/json
- *            
- *               
- */
+
 app.post('/api/countCart', (req, res) => {
     var cart_id = req.body.cart_id;
 
-    let query = "SELECT COUNT(user_id) * FROM cart_item WHERE cart_id=" + cart_id;
-    global.con.query(query, (err, data) => {
+    let query = "SELECT COUNT(user_id) FROM cart_item WHERE cart_id=" + cart_id;
+    global.con.query(query, (err, rows, data) => {
         if (err) {
             res.send(err);
         } else {
-            res.send(data);
+
+            res.send(rows[0]['COUNT(user_id)'].toString());
         }
     });
 })
