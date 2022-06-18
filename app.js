@@ -217,11 +217,11 @@ app.post('/api/login', (req, res) => {
  * @swagger
  * /api/logout/:
  *   post:
- *     summary: Log in to the platform
+ *     summary: Log out of to the platform
  *     tags: [Login and registration]
  *     responses:
  *       200:
- *         description: Log in to the platform
+ *         description: Log out of to the platform
  *         content:
  *           application/json
  *            
@@ -253,7 +253,20 @@ app.post('/api/logout', (req, res) => {
         });
     });
 })
-
+/**
+ * @swagger
+ * /api/addProduct:
+ *   get:
+ *     summary: Add new product
+ *     tags: [Product]
+ *     responses:
+ *       200:
+ *         description: Add new product
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.post('/api/addProduct', (req, res) => {
     var date_added = new Date();
     var current_quantity = req.body.current_quantity;
@@ -266,7 +279,7 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM product WHERE product_id ="  + product_id;
+    let query1 = "SELECT * FROM product WHERE product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.send(err);
@@ -304,6 +317,20 @@ app.post('/api/addProduct', (req, res) => {
     });
 
 })
+/**
+ * @swagger
+ * /api/editProduct:
+ *   get:
+ *     summary: Edit product
+ *     tags: [Product]
+ *     responses:
+ *       200:
+ *         description: Edit product
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.put('/api/editProduct', (req, res) => {
     var date_updated = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var cart_id = req.body.cart_id;
@@ -317,6 +344,20 @@ app.put('/api/editProduct', (req, res) => {
         }
     });
 })
+/**
+ * @swagger
+ * /api/deleteProduct/:cart_id:
+ *   get:
+ *     summary: Delete product by ID
+ *     tags: [Product]
+ *     responses:
+ *       200:
+ *         description: Delete product by ID
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.delete('/api/deleteProduct/:cart_id', (req, res) => {
     var cart_id = req.params.cart_id;
     let query = "DELETE FROM cart_item WHERE cart_id=" + "'" + cart_id + "'";
@@ -329,6 +370,20 @@ app.delete('/api/deleteProduct/:cart_id', (req, res) => {
     });
 
 })
+/**
+ * @swagger
+ * /api/cart/
+ *   get:
+ *     summary: Get product name
+ *     tags: [Cart, Product]
+ *     responses:
+ *       200:
+ *         description: Get product name
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
     let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + user_id;
@@ -340,6 +395,20 @@ app.post('/api/cart', (req, res) => {
         }
     });
 })
+/**
+ * @swagger
+ * /api/countCart/
+ *   get:
+ *     summary: Get number of items in cart
+ *     tags: [Cart]
+ *     responses:
+ *       200:
+ *         description: Get number of items in cart
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.post('/api/countCart', (req, res) => {
     var cart_id = req.body.cart_id;
 
