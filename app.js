@@ -256,7 +256,7 @@ app.post('/api/logout', (req, res) => {
 /**
  * @swagger
  * /api/addProduct:
- *   get:
+ *   post:
  *     summary: Add new product
  *     tags: [Product]
  *     responses:
@@ -320,7 +320,7 @@ app.post('/api/addProduct', (req, res) => {
 /**
  * @swagger
  * /api/editProduct:
- *   get:
+ *   put:
  *     summary: Edit product
  *     tags: [Product]
  *     responses:
@@ -370,7 +370,20 @@ app.delete('/api/deleteProduct/:cart_id', (req, res) => {
     });
 
 })
-
+/**
+ * @swagger
+ * /api/product/:
+ *   post:
+ *     summary: Get items from cart
+ *     tags: [Cart]
+ *     responses:
+ *       200:
+ *         description: Get items from cart
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
     let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + user_id;
@@ -382,7 +395,20 @@ app.post('/api/cart', (req, res) => {
         }
     });
 })
-
+/**
+ * @swagger
+ * /api/product/:
+ *   post:
+ *     summary: Count items in cart
+ *     tags: [Cart]
+ *     responses:
+ *       200:
+ *         description: Count items in cart
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
 app.post('/api/countCart', (req, res) => {
     var cart_id = req.body.cart_id;
 
