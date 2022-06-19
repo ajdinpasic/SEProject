@@ -1,5 +1,5 @@
-<app-logo-header *ngIf="isUserAuth()"></app-logo-header>
-<app-navigation *ngIf="isUserAuth()"></app-navigation>
+<app-logo-header *ngIf="isUserAuthorized()"></app-logo-header>
+<app-navigation *ngIf="isUserAuthorized()"></app-navigation>
 
 <router-outlet>
 <!--<div class="container-fluid pt-5">
@@ -18,5 +18,5 @@
     </div>
 </div>-->
 </router-outlet>
-<app-footer *ngIf="isUserAuth()"></app-footer>
+<app-footer *ngIf="isUserAuthorized()"></app-footer>
 
