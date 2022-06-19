@@ -1,49 +1,75 @@
 import { Injectable, Output } from '@angular/core';
 import { Product } from 'src/resources/models/product.model';
 import { EventEmitter } from '@angular/core';
+import { CartAddedUtil } from '../helpers/cart.added.util';
+import { GlobalHttpsCaller } from '../helpers/global.https';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  @Output() cartUpdated : EventEmitter<boolean> = new EventEmitter();
-  count: number = 2;
-  cartProducts: Product[] = [
-    {"productId": 1,
-    "name": 'T-shirt',
-    "color": 'red',
-    "size": 'Medium',
-    "quantity": 1,
-    "gender": 'string',
-    "price": 500,
-    "available": 'string',
-    "subcategory": 'string',
-    "image": 'https://cdn.shopify.com/s/files/1/0572/6479/9914/products/spod-1056591552-648-1_480x480@2x.png?v=1625958130',
-    "description": 'string'},
-    {"productId": 2,
-    "name": 'Hoodie',
-    "color": 'black',
-    "size": 'Medium',
-    "quantity": 0,
-    "gender": 'string',
-    "price": 100,
-    "available": 'string',
-    "subcategory": 'string',
-    "image": 'https://cdn.shopify.com/s/files/1/0572/6479/9914/products/spod-1058480633-204-1_300x300.png?v=1644879571',
-    "description": 'string'}
-  ];
+  @Output() addedToCart : EventEmitter<boolean> = new EventEmitter();
+  @Output() removedFromCart : EventEmitter<any> = new EventEmitter();
+  @Output() addedToCartWithQuantity : EventEmitter<CartAddedUtil> = new EventEmitter();
+  @Output() removedFromCartUpdateCounter : EventEmitter<any> = new EventEmitter();
+   @Output() addedItemCartUpdateCounter : EventEmitter<any> = new EventEmitter();
+  @Output() changeCartSummary  : EventEmitter<any> = new EventEmitter();
+  count: number = 0;
+  cartProducts: any[] = [];
   
-  constructor() { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   getCartItems() {
-    return this.cartProducts;
+    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":2});
   }
+
   addItemToCart(product: Product) {
-    this.cartProducts.push(product)
-    this.cartUpdated.emit(true);
+
+  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":1,"product_id":product.product_id,"user_id":2}).subscribe(
+     (response) => {
+       console.log(response)
+       if(response.status === 200 || response.status === 201) {
+         this.toastr.success("Product added to your cart!");
+        this.addedItemCartUpdateCounter.emit(this.countCartItems());
+       } else {
+         this.toastr.error("Something went wrong")
+       }
+     }
+  )
   }
-  countCartItems(): number {
-    return this.count;
+
+  countCartItems() {
+    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'countCart',{"user_id":2});
+  }
+
+  removeItem(item: any) {
+    this.http.delete(GlobalHttpsCaller.apiRootLocal+'deleteProduct/'+item).subscribe( (response) => {
+       
+       if(response === item) {
+        this.toastr.warning("Product deleted from your cart!");
+        this.getCartItems().subscribe(
+          (response) => {
+            this.cartProducts = response;
+            this.removedFromCart.emit(this.cartProducts)
+            this.removedFromCartUpdateCounter.emit(this.countCartItems());
+            this.changeCartSummary.emit();
+          }
+        )
+       
+      }
+      else {
+        this.toastr.error("Something went wrong")
+      }
+    })
+   
+  }
+
+  addItemToCartWithQuantity(product: Product, amount: number) {
+    // product.quantity = amount;
+    // this.cartProducts.push(product)
+    //  this.addedToCartWithQuantity.emit(new CartAddedUtil(this.cartProducts,amount));
   }
 }

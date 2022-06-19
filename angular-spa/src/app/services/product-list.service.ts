@@ -14,12 +14,11 @@ export class ProductListService {
   constructor(private http: HttpClient) { }
 
   getProduct(id: number) {
-    return this.products.find(item => item.productId == id)
+    return this.http.get<any>(GlobalHttpsCaller.apiRootLocal+'product/'+id);
   }
 
   getAllProducts(): Observable<any> {
-    
-  return this.http.get<any>(GlobalHttpsCaller.apiRootProd+'search')
+  return this.http.get<any>(GlobalHttpsCaller.apiRootLocal+'search')
   }
   
 }

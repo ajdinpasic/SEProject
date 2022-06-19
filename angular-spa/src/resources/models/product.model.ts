@@ -1,5 +1,5 @@
 export class Product {
-    productId: number;
+    product_id: number;
     name: string;
     color: string;
     size: string;
@@ -7,12 +7,12 @@ export class Product {
     gender: string;
     price: number;
     available: string;
-    subcategory: string;
+    namee: string;
     image: string;
     description: string;
 
     constructor(productId: number, name: string, color: string, size: string, quantity: number, gender: string, price: number, available: string, subcategory: string, image: string, description: string) {
-        this.productId = productId
+        this.product_id = productId
         this.name = name
         this.color = color
         this.size = size
@@ -20,7 +20,7 @@ export class Product {
         this.gender = gender
         this.price = price
         this.available = available
-        this.subcategory = subcategory
+        this.namee = subcategory
         this.image = image
         this.description = description
     }

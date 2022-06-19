@@ -7,8 +7,6 @@ const SubcategoryModel = require('./api/models/SubcategoryModel');
 const CoreModel = require('./api/models/CoreModel');
 const UserModel = require('./api/models/UserModel');
 
-var CryptoJS = require("crypto-js");
-var AES = require("crypto-js/aes");
 const app = express();
 var url = require('url');
 app.use(express.urlencoded({
@@ -151,7 +149,6 @@ app.post('/api/register', (req, res) => {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var password = req.body.password;
-    let user_password_hashed = CryptoJS.AES.encrypt(password, "Secret Paraphase");
     let date_ob = new Date();
     var email = req.body.email;
     let querytt = "SELECT * FROM user WHERE email=" + "'" + email + "'";
@@ -162,7 +159,7 @@ app.post('/api/register', (req, res) => {
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
             let query_insert = "INSERT INTO user (first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?)";
-            global.con.query(query_insert, [first_name, last_name, user_password_hashed.toString(), date_ob, email, (err, data) => {
+            global.con.query(query_insert, [first_name, last_name, password, date_ob, email, (err, data) => {
                 if (err) {
                     res.send(err);
                 }
@@ -191,8 +188,7 @@ app.post('/api/register', (req, res) => {
 app.post('/api/login', (req, res) => {
     var query_email = req.body.email;
     var query_password = req.body.password;
-    var query_password_hashed = CryptoJS.AES.encrypt(query_password, "Secret Paraphase");
-    let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password_hashed + "'";
+    let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
             res.send(err);
