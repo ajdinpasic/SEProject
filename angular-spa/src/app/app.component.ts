@@ -13,7 +13,7 @@ export class AppComponent {
 
    }
    
-   isUserAuth() {
+   isUserAuthorized() {
      return this.AuthSvc.isUserAuthorized();
    }
 }
