@@ -332,7 +332,7 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'"+user_id+"'" + " AND product_id =" + product_id;
+    let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'" + user_id + "'" + " AND product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.json({
@@ -342,7 +342,7 @@ app.post('/api/addProduct', (req, res) => {
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length > 0) {
             let newQuantity = data[0].current_quantity += current_quantity;
-            let query_ajdin = "UPDATE cart_item SET current_quantity=" + newQuantity + " WHERE product_id=" + product_id + " AND user_id=" + "'"+user_id+"'";
+            let query_ajdin = "UPDATE cart_item SET current_quantity=" + newQuantity + " WHERE product_id=" + product_id + " AND user_id=" + "'" + user_id + "'";
 
             global.con.query(query_ajdin, (err, data) => {
                 if (err) {
@@ -441,7 +441,7 @@ app.delete('/api/deleteProduct/:cart_id', (req, res) => {
  */
 app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
-    let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + "'"+user_id+"'";
+    let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + "'" + user_id + "'";
     global.con.query(query, (err, data) => {
         if (err) {
             res.send(err);
@@ -467,7 +467,7 @@ app.post('/api/cart', (req, res) => {
 app.post('/api/countCart', (req, res) => {
     var user_id = req.body.user_id;
 
-    let query = "SELECT COUNT(*) FROM cart_item WHERE user_id=" + "'"+user_id+"'";
+    let query = "SELECT COUNT(*) FROM cart_item WHERE user_id=" + "'" + user_id + "'";
     global.con.query(query, (err, rows, data) => {
         if (err) {
             res.send(err);
@@ -535,6 +535,66 @@ app.get('/api/review/:product_id', (req, res) => {
         }
 
     });
+})
+/**
+ * @swagger
+ * /api/filter/:
+ *   post:
+ *     summary: Filters
+ *     tags: [Filters]
+ *     responses:
+ *       200:
+ *         description: Filters
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/filter', (req, res) => {
+    var subcategory = req.body.subcategory;
+    var name = req.body.name;
+    var price = req.body.price;
+    var color = req.body.color;
+    var size = req.body.size;
+    var order = req.body.order;
+    let base_query = 'SELECT product.* FROM product';
+    if (subcategory != null) {
+        base_query += " JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id WHERE subcategory.namee=" + "'" + subcategory + "'";
+    }
+    if (name != null) {
+        base_query += " WHERE product.name LIKE " + "'" + name + "'";
+
+    }
+    if (price != null) {
+        base_query += " WHERE product.price LIKE " + "'" + price + "'";
+
+    }
+    if (color != null) {
+        base_query += " WHERE product.color LIKE " + "'" + color + "'";
+
+    }
+    if (size != null) {
+        base_query += " WHERE product.size LIKE " + "'" + size + "'";
+    }
+    if (order != null) {
+        base_query += " ORDER BY product.name DESC";
+    } else {
+        base_query += " ORDER BY product.name ASC";
+    }
+    global.con.query(base_query, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+
+    });
+
+
+
+
+
+
 })
 
 
