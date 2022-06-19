@@ -6,7 +6,6 @@ const SubcategoryService = require('./api/services/SubcategoryService');
 const SubcategoryModel = require('./api/models/SubcategoryModel');
 const CoreModel = require('./api/models/CoreModel');
 const UserModel = require('./api/models/UserModel');
-const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 var url = require('url');
@@ -151,32 +150,26 @@ app.post('/api/register', (req, res) => {
     var last_name = req.body.last_name;
     var password = req.body.password;
     let date_ob = new Date();
-    let user_id = uuidv4();
     var email = req.body.email;
     let querytt = "SELECT * FROM user WHERE email=" + "'" + email + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
-            res.json({"status":500})
-        } 
+            res.send(err);
+        }
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
-            let query_insert = "INSERT INTO user (user_id,first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?,?)";
-            console.log(query_insert)
-            global.con.query(query_insert, [user_id,first_name, last_name, password, date_ob, email], (err, data) => {
-                console.log("hello")
+            let query_insert = "INSERT INTO user (first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?)";
+            global.con.query(query_insert, [first_name, last_name, password, date_ob, email, (err, data) => {
                 if (err) {
-                     res.json({"status":500})
+                    res.send(err);
                 }
-                else {
-                 res.json({"status":200})
-                }
-            })
+                res.send(req.body);
+            }])
 
         } else {
-             res.json({"status":400})
+            res.send("User already exists with this email");
         }
     });
-
 })
 /**
  * @swagger
@@ -286,36 +279,41 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM cart_item WHERE user_id =" + user_id + " AND product_id =" + product_id;
+    let query1 = "SELECT * FROM product WHERE product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
-            res.json({"status":500})
+            res.send(err);
         }
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length > 0) {
-            let newQuantity = data[0].current_quantity+=current_quantity;
-            let query_ajdin = "UPDATE cart_item SET current_quantity=" +  newQuantity +" WHERE product_id=" + product_id + " AND user_id=" + user_id;
-            
+            let query_ajdin = 'UPDATE product SET current_quantity=' + "'" + current_quantity + "' WHERE product_id=" + "'" + product_id + "'";
             global.con.query(query_ajdin, (err, data) => {
                 if (err) {
-                     res.json({"status":500})
+                    res.send(err);
                 } else {
-                     res.json({"status":200})
+                    res.send(data);
                 }
             });
         }
-        else {
         let querytt = 'INSERT INTO cart_item (date_added,current_quantity,product_id,user_id) VALUES (?,?,?,?)';
         global.con.query(querytt, [date_added, current_quantity, product_id, user_id], (err, data) => {
             if (err) {
-                 res.json({"status":500})
+                res.send(err);
             }
-            
-            else {
-                res.json({"status":200})
-            }
+            let querytxt = 'SELECT * FROM cart_item WHERE product_id=' + product_id;
+            global.con.query(querytxt, (err, data) => {
+                if (err) {
+                    res.send(err);
+                }
+                const result = Object.values(JSON.parse(JSON.stringify(data)));
+                if (result.length === 0) {
+                    res.send(data);
+                } else {
+                    res.send(err);
+                }
+            });
         });
-    }
+
     });
 
 })
@@ -412,15 +410,15 @@ app.post('/api/cart', (req, res) => {
  *               
  */
 app.post('/api/countCart', (req, res) => {
-    var user_id = req.body.user_id;
+    var cart_id = req.body.cart_id;
 
-    let query = "SELECT COUNT(*) FROM cart_item WHERE user_id=" + user_id;
+    let query = "SELECT COUNT(user_id) FROM cart_item WHERE cart_id=" + cart_id;
     global.con.query(query, (err, rows, data) => {
         if (err) {
             res.send(err);
         } else {
 
-            res.send(rows[0]['COUNT(*)'].toString());
+            res.send(rows[0]['COUNT(user_id)'].toString());
         }
     });
 })
