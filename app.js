@@ -589,12 +589,6 @@ app.post('/api/filter', (req, res) => {
         }
 
     });
-
-
-
-
-
-
 })
 
 
