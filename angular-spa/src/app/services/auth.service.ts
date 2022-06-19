@@ -14,7 +14,15 @@ export class AuthService {
   }
 
   isUserAuthorized() {
+   let token = localStorage.getItem("token");
+   if(token == null) {
     return false;
+   }
+    return true;
+  }
+
+  setTokenAuth(token:any) {
+    localStorage.setItem("token",token)
   }
 
 }
