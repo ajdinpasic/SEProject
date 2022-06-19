@@ -7,6 +7,8 @@ const SubcategoryModel = require('./api/models/SubcategoryModel');
 const CoreModel = require('./api/models/CoreModel');
 const UserModel = require('./api/models/UserModel');
 
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
 const app = express();
 var url = require('url');
 app.use(express.urlencoded({
@@ -160,7 +162,7 @@ app.post('/api/register', (req, res) => {
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
             let query_insert = "INSERT INTO user (first_name, last_name, password, date_created,email) VALUES (?,?,?,?,?)";
-            global.con.query(query_insert, [first_name, last_name, user_password_hashed, date_ob, email, (err, data) => {
+            global.con.query(query_insert, [first_name, last_name, user_password_hashed.toString(), date_ob, email, (err, data) => {
                 if (err) {
                     res.send(err);
                 }
