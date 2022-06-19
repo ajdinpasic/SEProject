@@ -52,7 +52,7 @@
                     <div class="navbar-nav ml-auto py-0">
                         <a routerLink="/login" *ngIf="!isUserAuth()"   class="nav-item nav-link">Login</a>
                         <a routerLink="/register" *ngIf="!isUserAuth()" class="nav-item nav-link">Register</a>
-                        <a routerLink="/login" *ngIf="isUserAuth()" class="nav-item nav-link">Log out</a>
+                        <a routerLink="/login" *ngIf="isUserAuth()" (click) = "logout()" class="nav-item nav-link">Log out</a>
                     </div>
                 </div>
             </nav>
