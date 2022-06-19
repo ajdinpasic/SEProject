@@ -198,12 +198,12 @@ app.post('/api/login', (req, res) => {
     let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'" + ' AND password=' + "'" + query_password + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
-            res.send(err);
+            res.json({"status":500});
         }
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
-            res.send("User not found");
-        }
+            res.json({"status":400});
+        } else {
         let email = "";
         result.forEach(function (item) {
             email = item.email;
@@ -213,12 +213,12 @@ app.post('/api/login', (req, res) => {
 
         global.con.query(querytxt, (err, data) => {
             if (err) {
-                res.send(err);
+                res.json({"status":500})
             }
-            res.send(user_token);
+            res.json({"status":200,"token":user_token,"email":query_email})
 
         });
-    });
+    }}); 
 })
 /**
  * @swagger
@@ -236,26 +236,26 @@ app.post('/api/login', (req, res) => {
  */
 app.post('/api/logout', (req, res) => {
     var query_email = req.body.email;
-    let querytt = 'SELECT * FROM user WHERE email=' + "'" + query_email + "'";
+    var token = req.body.token;
+    let querytt = 'SELECT * FROM user WHERE email=' +  query_email + " AND token=" + token;
     global.con.query(querytt, (err, data) => {
         if (err) {
-            res.send(err);
+            res.status({"status":500});
         }
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length === 0) {
-            res.send("User not found");
+            res.status({"status":500});
         }
         let email = "";
         result.forEach(function (item) {
             email = item.email;
         });
-        let user_token = token();
-        let querytxt = 'UPDATE user SET token=null';
+        let querytxt = 'UPDATE user SET token=null WHERE token=' + token;
         global.con.query(querytxt, (err, data) => {
             if (err) {
-                res.send(err);
+                res.status({"status":500});
             }
-            res.send("Log out successfully");
+            res.status({"status":200});
 
         });
     });
