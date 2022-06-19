@@ -247,7 +247,8 @@ app.post('/api/login', (req, res) => {
                 res.json({
                     "status": 200,
                     "token": user_token,
-                    "email": query_email
+                    "email": query_email,
+                    "user_id": result[0].user_id,
                 })
 
             });
@@ -331,7 +332,7 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
-    let query1 = "SELECT * FROM cart_item WHERE user_id =" + user_id + " AND product_id =" + product_id;
+    let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'"+user_id+"'" + " AND product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.json({
@@ -341,7 +342,7 @@ app.post('/api/addProduct', (req, res) => {
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         if (result.length > 0) {
             let newQuantity = data[0].current_quantity += current_quantity;
-            let query_ajdin = "UPDATE cart_item SET current_quantity=" + newQuantity + " WHERE product_id=" + product_id + " AND user_id=" + user_id;
+            let query_ajdin = "UPDATE cart_item SET current_quantity=" + newQuantity + " WHERE product_id=" + product_id + " AND user_id=" + "'"+user_id+"'";
 
             global.con.query(query_ajdin, (err, data) => {
                 if (err) {
@@ -440,7 +441,7 @@ app.delete('/api/deleteProduct/:cart_id', (req, res) => {
  */
 app.post('/api/cart', (req, res) => {
     var user_id = req.body.user_id;
-    let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + user_id;
+    let query = "SELECT cart_item.*, product.* FROM cart_item JOIN product ON product.product_id = cart_item.product_id WHERE user_id=" + "'"+user_id+"'";
     global.con.query(query, (err, data) => {
         if (err) {
             res.send(err);
@@ -466,7 +467,7 @@ app.post('/api/cart', (req, res) => {
 app.post('/api/countCart', (req, res) => {
     var user_id = req.body.user_id;
 
-    let query = "SELECT COUNT(*) FROM cart_item WHERE user_id=" + user_id;
+    let query = "SELECT COUNT(*) FROM cart_item WHERE user_id=" + "'"+user_id+"'";
     global.con.query(query, (err, rows, data) => {
         if (err) {
             res.send(err);
@@ -494,11 +495,11 @@ app.post('/api/addReview', (req, res) => {
     var user_id = req.body.user_id;
     var product_id = req.body.product_id;
     var description = req.body.description;
+    var grade = req.body.grade;
     var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
-
-    let query = "INSERT INTO review (description, date_created,user_id,product_id) VALUES (?,?,?,?)";
-    global.con.query(query, [description, date, user_id, product_id], (err, rows, data) => {
+    let query = "INSERT INTO review (description, date_created,user_id,product_id, grade) VALUES (?,?,?,?,?)";
+    global.con.query(query, [description, date, user_id, product_id, grade], (err, rows, data) => {
         if (err) {
             res.send(err);
         } else {
@@ -525,7 +526,7 @@ app.post('/api/addReview', (req, res) => {
  */
 app.get('/api/review/:product_id', (req, res) => {
     var product_id = req.params.product_id;
-    let query = "SELECT * FROM review WHERE product_id=" + product_id;
+    let query = "SELECT review.*, user.first_name, user.last_name FROM review JOIN user ON user.user_id = review.user_id WHERE product_id=" + product_id;
     global.con.query(query, (err, data) => {
         if (err) {
             res.send(err);
