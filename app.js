@@ -651,7 +651,71 @@ app.delete('/api/deleteCart', (req, res) => {
             res.send(user_id);
         }
     });
+})
 
+/**
+ * @swagger
+ * /api/purchase/item/:
+ *   post:
+ *     summary: Purchase
+ *     tags: [Purchase]
+ *     responses:
+ *       200:
+ *         description: Purchase
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/purchase/item', (req, res) => {
+    let product_order_item = req.body.product_order_item;
+    let product_id = req.body.product_id;
+    let quantity = req.body.quantity;
+    let query = "INSERT INTO product_order_item (product_order_item, product_id,quantity) VALUES (?,?,?)";
+    global.con.query(query, [product_order_item, product_id, quantity], (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json({
+                "status": 200
+            })
+        }
+
+    });
+})
+/**
+ * @swagger
+ * /api/purchase/:
+ *   post:
+ *     summary: Purchase
+ *     tags: [Purchase]
+ *     responses:
+ *       200:
+ *         description: Purchase
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/purchase', (req, res) => {
+    var price_total = req.body.price_total;
+    var quantity_total = req.body.quantity_total;
+    var user_id = req.body.user_id;
+    var order_address = req.body.order_address;
+    let product_order_id = uuidv4();
+    var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    let query = "INSERT INTO product_order (product_order_id, order_date,price_total,quantity_total, user_id, order_address) VALUES (?,?,?,?,?,?)";
+    global.con.query(query, [product_order_id, date, price_total, quantity_total, user_id, order_address], (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json({
+                "status": 200,
+                "order_id": product_order_id
+            })
+        }
+
+    });
 })
 
 
