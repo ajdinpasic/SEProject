@@ -12,6 +12,7 @@ const {
 
 const app = express();
 var url = require('url');
+const { type } = require('os');
 app.use(express.urlencoded({
     extended: false
 }));
@@ -557,26 +558,60 @@ app.post('/api/filter', (req, res) => {
     var color = req.body.color;
     var size = req.body.size;
     var order = req.body.order;
+    var shouldSetAnd = false;
+    var shouldSetWhere = true;
     let base_query = 'SELECT product.* FROM product';
     if (subcategory != null) {
-        base_query += " JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id WHERE subcategory.namee=" + "'" + subcategory + "'";
+        base_query += " JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id WHERE subcategory.namee=" + "'" + subcategory + "'"  ;
+        shouldSetWhere = false;
+        shouldSetAnd = true;
     }
     if (name != null) {
-        base_query += " WHERE product.name LIKE " + "'" + name + "'";
-
+        if(shouldSetWhere) {
+            base_query += " WHERE "
+            shouldSetWhere = false;
+        }
+        base_query += "  product.name LIKE " + "'%" + name + "%'";
+        shouldSetAnd = true;
     }
     if (price != null) {
-        base_query += " WHERE product.price LIKE " + "'" + price + "'";
+         if(shouldSetWhere) {
+            base_query += " WHERE "
+            shouldSetWhere = false;
+        }
+         if(shouldSetAnd) {
+            base_query +=" AND "
+        }
+        shouldSetAnd = true;
+        let convertedPrice = Number(price)
+        base_query += "  product.price >= " +  convertedPrice ;
 
     }
     if (color != null) {
-        base_query += " WHERE product.color LIKE " + "'" + color + "'";
+          if(shouldSetWhere) {
+            base_query += " WHERE "
+            shouldSetWhere = false;
+        }
+         if(shouldSetAnd) {
+            base_query +=" AND "
+        }
+        shouldSetAnd = true;
+        base_query += "  product.color = " + "'" + color + "'";
 
     }
     if (size != null) {
-        base_query += " WHERE product.size LIKE " + "'" + size + "'";
+          if(shouldSetWhere) {
+            base_query += " WHERE "
+            shouldSetWhere = false;
+        }
+         if(shouldSetAnd) {
+            base_query +=" AND "
+        }
+       
+        base_query += "  product.size = " + "'" + size + "'";
     }
     if (order != null) {
+        
         base_query += " ORDER BY product.name DESC";
     } else {
         base_query += " ORDER BY product.name ASC";
