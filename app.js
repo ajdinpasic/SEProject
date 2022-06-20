@@ -632,7 +632,7 @@ app.post('/api/filter', (req, res) => {
  * /api/deleteCart/:
  *   get:
  *     summary: Delete item from cart by ID
- *     tags: [Product]
+ *     tags: [Cart]
  *     responses:
  *       200:
  *         description: Delete item from cart by ID
