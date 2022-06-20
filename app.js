@@ -717,6 +717,32 @@ app.post('/api/purchase', (req, res) => {
 
     });
 })
+/**
+ * @swagger
+ * /api/getPurchaseHistory/:
+ *   post:
+ *     summary: Get purchase history by user ID
+ *     tags: [Purchase History]
+ *     responses:
+ *       200:
+ *         description: Get purchase history by user ID
+ *         content:
+ *           application/json
+ *            
+ *               
+ */
+app.post('/api/getPurchaseHistory', (req, res) => {
+    var user_id = req.body.user_id;
+    let query = "SELECT product_order.*, product_order_item.product_id, product_order_item.quantity, product.name,product.image FROM product_order JOIN product_order_item ON product_order_item.product_order_item = product_order.product_order_id JOIN product ON product_order_item.product_id = product.product_id WHERE product_order.user_id=" + "'" + user_id + "'";
+    global.con.query(query, (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(rows);
+        }
+
+    });
+})
 
 
 app.listen(process.env.PORT || 5000, () => console.log('Listening on 5000'));
