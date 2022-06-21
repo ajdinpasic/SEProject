@@ -23,11 +23,11 @@ export class NavigationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.navSvc.getAllCategories().subscribe({
-      next: (response:any) => 
-      this.categories = response,
-      error: (err) => this.toastr.error('No categories to display')
-    });
+    // this.navSvc.getAllCategories().subscribe({
+    //   next: (response:any) => 
+    //   this.categories = response,
+    //   error: (err) => this.toastr.error('No categories to display')
+    // });
     
   }
 

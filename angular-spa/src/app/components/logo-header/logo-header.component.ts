@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartAddedUtil } from 'src/app/helpers/cart.added.util';
+import { FilterService } from 'src/app/services/filter.service';
+import { LogoService } from 'src/app/services/logo.service';
 
 @Component({
   selector: 'app-logo-header',
@@ -11,8 +13,8 @@ import { CartAddedUtil } from 'src/app/helpers/cart.added.util';
 export class LogoHeaderComponent implements OnInit {
 
   count: number;
-
-  constructor(private cartSvc: CartService,private toastr: ToastrService) { }
+  keyWord: string = "";
+  constructor(private cartSvc: CartService,private toastr: ToastrService, private filterSvc: FilterService, private logoSvc: LogoService) { }
 
   ngOnInit(): void {
     this.cartSvc.countCartItems().subscribe(
@@ -39,28 +41,34 @@ export class LogoHeaderComponent implements OnInit {
           );
       }
     )
+
+    this.logoSvc.changeCartAfterPurchase.subscribe(
+      (response) => {
+         response.subscribe(
+            (response) => {
+              this.count = response;
+            }
+          );
+      }
+    )
    
-    // this.cartSvc.addedToCart.subscribe(
-    //   (data: boolean) => {
-    //     if(data) {
-    //       this.count++
-    //       this.toastr.success('Product added to your cart!');
-    //     }
-    //     else {
-    //       this.toastr.error('Product quantity out of range!');
-    //     }
-        
-    //   }
-    // )
-
-    // this.cartSvc.removedFromCart.subscribe((data: any) => {
-    //   this.count--;
-    //   // this.toastr.warning('Product removed from your cart!');
-    // })
-
-    // this.cartSvc.addedToCartWithQuantity.subscribe((data: CartAddedUtil)=> {
-    //   this.count+= data.count
-    // })
+  
+  }
+  doBigSearch() {
+    console.log(this.keyWord);
+    if(this.keyWord.length === 0 || !this.keyWord || this.keyWord == null) {
+      this.keyWord = null;
+    }
+    // let subcategory = this.filterSvc.getSubCategory();
+    // let price = this.filterSvc.getPrice();
+    // let color = this.filterSvc.getColor();
+    // let size = this.filterSvc.getSize();
+    // let order = this.filterSvc.getOrder();
+    let search = this.keyWord;
+    this.filterSvc.filterProductsAsync(null,null,null,null,null,search);
+  }
+  public getSearch() {
+    return this.keyWord;
   }
 
 }

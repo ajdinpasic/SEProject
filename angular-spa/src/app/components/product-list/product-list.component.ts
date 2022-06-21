@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/services/cart.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { Product } from 'src/resources/models/product.model';
 
@@ -15,7 +16,7 @@ export class ProductListComponent implements OnInit {
   products : Product[];
   productSearch: any;
   response: Product[];
-  constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router, private toastr: ToastrService) { 
+  constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router, private toastr: ToastrService, private filtersSvc: FilterService) { 
     
   }
 
@@ -25,6 +26,12 @@ export class ProductListComponent implements OnInit {
     //   this.products = response;
     //   this.response = response;
     // }) 
+    this.filtersSvc.filtersApplied.subscribe(
+      (response) => {
+        this.products = response;
+        this.response = response;
+      }
+    );
  -
     this.productListSvc.getAllProducts().subscribe({
       next: (response:Product[]) => {
