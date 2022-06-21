@@ -24,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DropDownDirective } from './directives/drop-down-directive';
 import { NavigationServiceService } from './services/navigation-service.service';
+import { FilterService } from './services/filter.service';
+import { LogoService } from './services/logo.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,7 @@ import { NavigationServiceService } from './services/navigation-service.service'
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ProductListService,CartService,AuthService,NavigationServiceService],
+  providers: [ProductListService,CartService,AuthService,NavigationServiceService, FilterService, LogoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
