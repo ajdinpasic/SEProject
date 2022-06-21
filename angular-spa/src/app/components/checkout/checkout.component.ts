@@ -1,4 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GlobalHttpsCaller } from 'src/app/helpers/global.https';
+import { AuthService } from 'src/app/services/auth.service';
+import { LogoService } from 'src/app/services/logo.service';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +12,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  checkoutForm: FormGroup;
+   city : string;
+  country : string;
+ zip : string;
+   address : string;
+  first : string;
+   last : string;
+   priceTotal: number = 0;
+  quantityTotal : number = 0;
+  constructor(private logoSvc: LogoService) { }
 
   ngOnInit(): void {
+this.checkoutForm = new FormGroup({
+      city: new FormControl('',[Validators.required,Validators.maxLength(10)]),
+        country: new FormControl('',[Validators.required,Validators.maxLength(10)]),
+           zip: new FormControl('',[Validators.required,Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+          address: new FormControl('',[Validators.required,Validators.maxLength(10)]),
+           first: new FormControl('',[Validators.required,Validators.maxLength(10)]),
+          last: new FormControl('',[Validators.required,Validators.maxLength(10)]),
+           mobile: new FormControl('',[Validators.required,Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+    });
+     this.logoSvc.getCheckoutInfo();
   }
+
+  onSubmit() {
+    this.logoSvc.makeOrder();
+  }
+
 
 }
