@@ -3,117 +3,128 @@
     <!-- Shop Sidebar Start -->
    
         <!-- Price Start -->
+        <form>
+        <div class="mb-5">
+            <h5 class="font-weight-semi-bold mb-4">Filter by category</h5>
+            
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+            <input type="radio" checked (change)="filterChanged()" value="none" name="subcategory" class="custom-control-input"
+                id="sub-none">
+            <label class="custom-control-label" for="sub-none">Select one</label>
+        
+        </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3" *ngFor="let sub of subCategory">
+                    <input type="radio" (change)="filterChanged()" value="{{sub.namee}}" name="subcategory" class="custom-control-input" id="sub-{{sub.subcategory_id}}">
+                    <label class="custom-control-label" for="sub-{{sub.subcategory_id}}">{{sub.namee}}</label>
+        
+                </div>
+        
+            
+        </div>
         <div class="border-bottom mb-4 pb-4">
             <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-            <form>
+        
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="radio" name="price" value="none" checked (change)="filterChanged()" class="custom-control-input" id="price-none">
+                <label class="custom-control-label" for="price-none">Select one</label>
+            
+            </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="price-all">
-                    <label class="custom-control-label" for="price-all">All Price</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="price-1">
-                    <label class="custom-control-label" for="price-1">$0 - $100</label>
-                    <span class="badge border font-weight-normal">150</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="price-2">
-                    <label class="custom-control-label" for="price-2">$100 - $200</label>
-                    <span class="badge border font-weight-normal">295</span>
+                    <input type="radio" name="price" value="0" (change)="filterChanged()" class="custom-control-input" id="price-1">
+                    <label class="custom-control-label" for="price-1">$0+</label>
+                
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="price-3">
-                    <label class="custom-control-label" for="price-3">$200 - $300</label>
-                    <span class="badge border font-weight-normal">246</span>
+                    <input type="radio" name="price" value="100" (change)="filterChanged()"  class="custom-control-input" id="price-2">
+                    <label class="custom-control-label" for="price-2">$100+</label>
                 </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="price-4">
-                    <label class="custom-control-label" for="price-4">$300 - $400</label>
-                    <span class="badge border font-weight-normal">145</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                    <input type="checkbox" class="custom-control-input" id="price-5">
-                    <label class="custom-control-label" for="price-5">$400 - $500</label>
-                    <span class="badge border font-weight-normal">168</span>
-                </div>
-            </form>
+                
+               
+               
+           
         </div>
         <!-- Price End -->
 
         <!-- Color Start -->
         <div class="border-bottom mb-4 pb-4">
             <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-            <form>
+        
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="color-all">
-                    <label class="custom-control-label" for="price-all">All Color</label>
-                    <span class="badge border font-weight-normal">1000</span>
+                    <input type="radio" name="color" value="none" (change)="filterChanged()" class="custom-control-input" checked id="color-none">
+                    <label class="custom-control-label" for="color-none">Select one</label>
+                
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-1">
-                    <label class="custom-control-label" for="color-1">Black</label>
-                    <span class="badge border font-weight-normal">150</span>
+                    <input type="radio" name="color" value="Blue" (change)="filterChanged()" class="custom-control-input" id="color-1">
+                    <label class="custom-control-label" for="color-1">Blue</label>
+                    
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-2">
+                    <input type="radio" name="color" value="White" (change)="filterChanged()" class="custom-control-input" id="color-2">
                     <label class="custom-control-label" for="color-2">White</label>
-                    <span class="badge border font-weight-normal">295</span>
+                    
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-3">
-                    <label class="custom-control-label" for="color-3">Red</label>
-                    <span class="badge border font-weight-normal">246</span>
+                    <input type="radio" name="color" value="Yellow" (change)="filterChanged()" class="custom-control-input" id="color-3">
+                    <label class="custom-control-label" for="color-3">Yellow</label>
+                    
                 </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-4">
-                    <label class="custom-control-label" for="color-4">Blue</label>
-                    <span class="badge border font-weight-normal">145</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                    <input type="checkbox" class="custom-control-input" id="color-5">
-                    <label class="custom-control-label" for="color-5">Green</label>
-                    <span class="badge border font-weight-normal">168</span>
-                </div>
-            </form>
+                
+           
         </div>
         <!-- Color End -->
 
         <!-- Size Start -->
         <div class="mb-5">
             <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
-            <form>
+        
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="size-all">
-                    <label class="custom-control-label" for="size-all">All Size</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-1">
-                    <label class="custom-control-label" for="size-1">XS</label>
-                    <span class="badge border font-weight-normal">150</span>
+                    <input type="radio" checked name="size" value="none" (change)="filterChanged()" class="custom-control-input" id="size-none">
+                    <label class="custom-control-label" for="size-none">Select one</label>
+                
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-2">
-                    <label class="custom-control-label" for="size-2">S</label>
-                    <span class="badge border font-weight-normal">295</span>
+                    <input type="radio" name="size" value="S" (change)="filterChanged()" class="custom-control-input" id="size-1">
+                    <label class="custom-control-label" for="size-1">S</label>
+                    
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-3">
-                    <label class="custom-control-label" for="size-3">M</label>
-                    <span class="badge border font-weight-normal">246</span>
+                    <input type="radio" name="size" value="M" (change)="filterChanged()" class="custom-control-input" id="size-2">
+                    <label class="custom-control-label" for="size-2">M</label>
+                    
                 </div>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-4">
-                    <label class="custom-control-label" for="size-4">L</label>
-                    <span class="badge border font-weight-normal">145</span>
+                    <input type="radio" name="size" value="L" (change)="filterChanged()" class="custom-control-input" id="size-3">
+                    <label class="custom-control-label" for="size-3">L</label>
+                    
                 </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                    <input type="checkbox" class="custom-control-input" id="size-5">
-                    <label class="custom-control-label" for="size-5">XL</label>
-                    <span class="badge border font-weight-normal">168</span>
-                </div>
-            </form>
+                
+            
         </div>
+        <div class="mb-5">
+            <h5 class="font-weight-semi-bold mb-4">Order</h5>
+        
+        
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="radio" checked name="order" (change)="filterChanged()" class="custom-control-input" id="o-n" value="none">
+                <label class="custom-control-label" for="o-n">Select one</label>
+            
+            </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="radio" name="order" (change)="filterChanged()" class="custom-control-input" id="o-1" value="Ascending">
+                    <label class="custom-control-label" for="o-1">Ascending</label>
+        
+                </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="radio" name="order" (change)="filterChanged()" class="custom-control-input" id="o-2" value="Descending">
+                    <label class="custom-control-label" for="o-2">Descending</label>
+        
+                </div> 
+        
+          
+        </div>
+        </form>
         <!-- Size End -->
     <!-- Shop Sidebar End -->
   
