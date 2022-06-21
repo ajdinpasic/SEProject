@@ -30,6 +30,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    	if(!this.emailModel || this.emailModel == null || !this.passwordModel || this.passwordModel == null ||
+        !this.firstNameModel || this.firstNameModel == null ||!this.lastNameModel || this.lastNameModel == null) {
+        this.toastr.error("Please enter all fields");
+        return;
+      }
     	  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'register',{"first_name":this.firstNameModel, "last_name":this.lastNameModel, "email":this.emailModel, "password":this.passwordModel}).subscribe(
          (response) => {
            console.log("aaa: "+JSON.stringify(response));

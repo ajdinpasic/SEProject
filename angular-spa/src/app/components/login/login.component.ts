@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
      this.loginForm = new FormGroup({
-      email: new FormControl('',[Validators.required,Validators.email]),
+      email: new FormControl(this.emailModel,[Validators.required,Validators.email]),
       password: new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9]*')])
     });
   }
 
   onSubmit(form: FormGroup) {
-    	
+    	if(!this.emailModel || this.emailModel == null || !this.passwordModel || this.passwordModel == null) {
+        this.toastr.error("Please enter all fields");
+        return;
+      }
       this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'login',{"email":this.emailModel, "password":this.passwordModel}).subscribe(
          (response) => {
            console.log("aaa: "+JSON.stringify(response));
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
             this.toastr.success("Successfully logged in!");
              this.authSvc.setTokenAuth(response.token);
             localStorage.setItem("email",response.email)
+            localStorage.setItem("id",response.user_id)
 
 this.router.navigate(['/products'])
 
