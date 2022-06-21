@@ -10,8 +10,8 @@ export class NavigationServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCategories(): Observable<any> {
+  // getAllCategories(): Observable<any> {
     
-  return this.http.get<any>(GlobalHttpsCaller.apiRootProd+'subcategory')
-  }
+  // return this.http.get<any>(GlobalHttpsCaller.apiRootProd+'subcategory')
+  // }
 }

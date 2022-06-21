@@ -5,6 +5,7 @@ import { CartAddedUtil } from '../helpers/cart.added.util';
 import { GlobalHttpsCaller } from '../helpers/global.https';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +21,17 @@ export class CartService {
   count: number = 0;
   cartProducts: any[] = [];
   
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private authSvc: AuthService) { }
 
   getCartItems() {
-    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":2});
+     let user_id = this.authSvc.getUserIdAuth();
+    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id});
   }
 
   addItemToCart(product: Product) {
+    let user_id = this.authSvc.getUserIdAuth();
 
-  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":1,"product_id":product.product_id,"user_id":2}).subscribe(
+  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":1,"product_id":product.product_id,"user_id":user_id}).subscribe(
      (response) => {
        console.log(response)
        if(response.status === 200 || response.status === 201) {
@@ -42,7 +45,8 @@ export class CartService {
   }
 
   countCartItems() {
-    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'countCart',{"user_id":2});
+     let user_id = this.authSvc.getUserIdAuth();
+    return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'countCart',{"user_id":user_id});
   }
 
   removeItem(item: any) {
