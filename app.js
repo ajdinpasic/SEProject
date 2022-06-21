@@ -641,14 +641,14 @@ app.post('/api/filter', (req, res) => {
  *            
  *               
  */
-app.delete('/api/deleteCart', (req, res) => {
+app.delete('/api/deleteCart/:user_id', (req, res) => {
     var user_id = req.params.user_id;
     let query = "DELETE FROM cart_item WHERE user_id=" + "'" + user_id + "'";
     global.con.query(query, (err, data) => {
         if (err) {
-            res.send(err);
+            res.json({"status":500});
         } else {
-            res.send(user_id);
+            res.json({"status":200});
         }
     });
 })
