@@ -695,13 +695,33 @@ app.post('/api/purchase/item', (req, res) => {
     global.con.query(query, [product_order_item, product_id, quantity], (err, rows, data) => {
         if (err) {
             res.send(err);
-        } else {
-            res.json({
-                "status": 200
-            })
         }
 
     });
+    let query2 = "SELECT quantity FROM PRODUCT WHERE product_id=" + "'" + product_id + "'";
+    var old_quantity;
+    var new_quantity;
+    global.con.query(query2, (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            old_quantity = row[0]["quantity"];
+            new_quantity = old_quantity - quantity;
+
+        }
+
+    });
+    let query3 = 'UPDATE product SET quantity=' + "'" + new_quantity + "'" + " WHERE product_id=" + "'" + product_id + "'";
+    global.con.query(query3, (err, rows, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(rows);
+
+        }
+
+    });
+
 })
 /**
  * @swagger
