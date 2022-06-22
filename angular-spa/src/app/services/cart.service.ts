@@ -38,7 +38,7 @@ export class CartService {
          this.toastr.success("Product added to your cart!");
         this.addedItemCartUpdateCounter.emit(this.countCartItems());
        } else {
-         this.toastr.error("Something went wrong")
+         this.toastr.error("Something went wrong, quantity out of range")
        }
      }
   )
