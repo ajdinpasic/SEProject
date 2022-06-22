@@ -26,6 +26,8 @@ import { DropDownDirective } from './directives/drop-down-directive';
 import { NavigationServiceService } from './services/navigation-service.service';
 import { FilterService } from './services/filter.service';
 import { LogoService } from './services/logo.service';
+import { PurchaseHistoryComponent } from './components/purchase-history/purchase-history.component';
+import { PurchaseService } from './services/purchase.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { LogoService } from './services/logo.service';
     ProceedToCheckoutComponent,
     RegistrationComponent,
     LoginComponent,
-    DropDownDirective
+    DropDownDirective,
+    PurchaseHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,7 @@ import { LogoService } from './services/logo.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ProductListService,CartService,AuthService,NavigationServiceService, FilterService, LogoService],
+  providers: [ProductListService,CartService,AuthService,NavigationServiceService, FilterService, LogoService,PurchaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
