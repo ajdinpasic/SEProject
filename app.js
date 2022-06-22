@@ -348,10 +348,8 @@ app.post('/api/addProduct', (req, res) => {
                     "status": 500
                 })
             }
-
-        }
-    })
-    let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'" + user_id + "'" + " AND product_id =" + product_id;
+            else {
+                let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'" + user_id + "'" + " AND product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
             res.json({
@@ -389,6 +387,11 @@ app.post('/api/addProduct', (req, res) => {
             });
         }
     });
+            }
+
+        }
+    })
+    
 
 })
 /**
