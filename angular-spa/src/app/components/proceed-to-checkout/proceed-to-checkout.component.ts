@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { GlobalHttpsCaller } from 'src/app/helpers/global.https';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -15,10 +16,11 @@ export class ProceedToCheckoutComponent implements OnInit {
   subtotal: number = 0
   products: any;
 
-  constructor(private http: HttpClient,private cartSvc: CartService) { }
+  constructor(private http: HttpClient,private cartSvc: CartService,private authSvc: AuthService) { }
 
   ngOnInit(): void {
-    this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":2}).subscribe(
+    let user_id = this.authSvc.getUserIdAuth();
+    this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
       (response:any) => {
         console.log(response)
           this.products = response;

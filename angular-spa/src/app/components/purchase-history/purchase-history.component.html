@@ -1,0 +1,53 @@
+<!-- Cart Start -->
+<div class="container-fluid pt-5"> 
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Purchase date</th>
+                        <th>Total price</th>
+                        <th>Total quantity</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    <h3 *ngIf="purchasedProducts.length == 0" style="color: red;">Your purchase history is empty</h3>
+                    <tr *ngFor="let item of purchasedProductsFinal">
+                        <td class="align-middle">{{item.order_date | date: 'dd/MM/yyyy'}}</td>
+                        <td class="align-middle">
+                            {{item.price_total}}
+                        </td>
+                        <td class="align-middle">{{item.quantity_total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
+
+<!-- Cart End -->
+<!-- Cart Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Product image</th>
+                        <th>Product name</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                   
+                    <tr *ngFor="let item of individualOrdersFinal">
+                        <td class="align-middle"><img src="{{item.image}}" alt="" style="width: 50px;"> 
+                        </td>
+                        <td class="align-middle">${{item.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Cart End -->

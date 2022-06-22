@@ -35,7 +35,7 @@ export class LogoService {
          this.toastr.success("Successful purchase!Thank you!");
       }
      )
-     this.router.navigate(['/products']);
+    //  this.router.navigate(['/products']);
   }
 
   makeOrder() {
@@ -49,23 +49,38 @@ export class LogoService {
       (response) => {
         let order_id = response.order_id;
 
-          this.purchaseProducts(order_id);
+          // this.purchaseProducts(order_id);
+    //       this.productsToBuy.forEach(element => {
+    //   console.log("vrace");
+    //   this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity})
+    // });
+    this.productsToBuy.forEach(element => {
+      this.purchaseProducts(order_id,element)
+    })
           this.emptyCartAfter()
       }
      )
   }
-  purchaseProducts(order_id) {
-    this.productsToBuy.forEach(element => {
-      this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity})
-    });
-     
-  }
+   purchaseProducts(order_id,element) {
+  //   console.log("bb: "+this.productsToBuy)
+  //   this.productsToBuy.forEach(element => {
+  //     console.log("vrace");
+  //     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity})
+  //   });
+
+     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity}).subscribe(
+      (response) => {
+        
+      }
+     )
+   }
 
   getCheckoutInfo() {
     
      let user_id = this.authSvc.getUserIdAuth();
     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
         (response) => {
+          console.log(response)
             this.prepareCheckout(response);
         }
     );
@@ -80,6 +95,7 @@ export class LogoService {
 products.forEach(element => {
 
       total+=element.price;
+      total*=element.current_quantity;
       quantity+=element.current_quantity;
       
     });
