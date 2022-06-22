@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.toastr.error("Please enter all fields");
         return;
       }
-      this.http.post<any>(GlobalHttpsCaller.apiRootProd+'login',{"email":this.emailModel, "password":this.passwordModel}).subscribe(
+      this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'login',{"email":this.emailModel, "password":this.passwordModel}).subscribe(
          (response) => {
            console.log("aaa: "+JSON.stringify(response));
            if(response.status === 200) {

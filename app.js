@@ -52,8 +52,8 @@ function hashCode(string) {
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-     res.setHeader('Access-Control-Allow-Origin','https://fan-shop.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    //  res.setHeader('Access-Control-Allow-Origin','https://fan-shop.vercel.app');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -89,7 +89,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.get('/api/subcategory', (req, res) => {
     global.con.query('SELECT * FROM subcategory', [], (err, data) => {
         if (err) {
-            console.log('Error');
         }
         res.send(data);
     });
@@ -117,7 +116,6 @@ var token = function () {
 app.get('/api/search', (req, res) => {
     global.con.query('SELECT product.*,subcategory.namee, product.subcategory_id  FROM product JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id', [], (err, data) => {
         if (err) {
-            console.log('Error');
         }
         res.send(data);
     });
@@ -275,16 +273,20 @@ app.post('/api/login', (req, res) => {
 app.post('/api/logout', (req, res) => {
     var query_email = req.body.email;
     var token = req.body.token;
+    // console.log(query_email); console.log(token)
     let querytt = "SELECT * FROM user WHERE email=" + "'" + query_email + "'" + " AND token=" + "'" + token + "'";
     global.con.query(querytt, (err, data) => {
         if (err) {
+            console.log("error1")
             res.json({
                 "status": 500
             });
         }
+       console.log(data)
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         // console.log(result); 
         if (result.length === 0) {
+            console.log("error2")
             res.json({
                 "status": 500
             });
@@ -296,6 +298,7 @@ app.post('/api/logout', (req, res) => {
             let querytxt = 'UPDATE user SET token=null WHERE token=' + "'" + token + "'";
             global.con.query(querytxt, (err, data) => {
                 if (err) {
+                    console.log("error3")
                     res.json({
                         "status": 500
                     });
@@ -733,7 +736,7 @@ app.post('/api/purchase', (req, res) => {
  */
 app.post('/api/getPurchaseHistory', (req, res) => {
     var user_id = req.body.user_id;
-    let query = "SELECT product_order.*, product_order_item.product_id, product_order_item.quantity, product.name,product.image FROM product_order JOIN product_order_item ON product_order_item.product_order_item = product_order.product_order_id JOIN product ON product_order_item.product_id = product.product_id WHERE product_order.user_id=" + "'" + user_id + "'";
+    let query = "SELECT product_order.*, product.name, product.image FROM product_order JOIN product_order_item ON product_order.product_order_id = product_order_item.product_order_item JOIN product ON product_order_item.product_id = product.product_id WHERE user_id=" + "'" + user_id + "'";
     global.con.query(query, (err, rows, data) => {
         if (err) {
             res.send(err);
