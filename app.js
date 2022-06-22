@@ -88,8 +88,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  */
 app.get('/api/subcategory', (req, res) => {
     global.con.query('SELECT * FROM subcategory', [], (err, data) => {
-        if (err) {
-        }
+        if (err) {}
         res.send(data);
     });
 })
@@ -115,8 +114,7 @@ var token = function () {
  */
 app.get('/api/search', (req, res) => {
     global.con.query('SELECT product.*,subcategory.namee, product.subcategory_id  FROM product JOIN subcategory ON product.subcategory_id=subcategory.subcategory_id', [], (err, data) => {
-        if (err) {
-        }
+        if (err) {}
         res.send(data);
     });
 })
@@ -282,7 +280,7 @@ app.post('/api/logout', (req, res) => {
                 "status": 500
             });
         }
-       console.log(data)
+        console.log(data)
         const result = Object.values(JSON.parse(JSON.stringify(data)));
         // console.log(result); 
         if (result.length === 0) {
@@ -331,6 +329,7 @@ app.post('/api/addProduct', (req, res) => {
     var current_quantity = req.body.current_quantity;
     var product_id = req.body.product_id;
     var user_id = req.body.user_id;
+    var quantity;
     /*
     iz bodija primis product id
     prvo uradi query select * from product where product id = product_id
@@ -338,6 +337,20 @@ app.post('/api/addProduct', (req, res) => {
     ako nije, product postoji , updejtuj njegov current quantity sa current_quantity
     */
 
+    let query = 'SELECT quantity FROM product WHERE product_id=' + "'" + product_id + "'";
+    global.con.query(query, (err, row) => {
+        if (err) {
+            res.send(err);
+        } else {
+            quantity = row[0]["quantity"];
+            if (quantity < current_quantity) {
+                res.json({
+                    "status": 500
+                })
+            }
+
+        }
+    })
     let query1 = "SELECT * FROM cart_item WHERE user_id =" + "'" + user_id + "'" + " AND product_id =" + product_id;
     global.con.query(query1, (err, data) => {
         if (err) {
@@ -649,9 +662,13 @@ app.delete('/api/deleteCart/:user_id', (req, res) => {
     let query = "DELETE FROM cart_item WHERE user_id=" + "'" + user_id + "'";
     global.con.query(query, (err, data) => {
         if (err) {
-            res.json({"status":500});
+            res.json({
+                "status": 500
+            });
         } else {
-            res.json({"status":200});
+            res.json({
+                "status": 200
+            });
         }
     });
 })
