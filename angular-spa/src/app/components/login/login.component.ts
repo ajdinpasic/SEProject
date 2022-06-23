@@ -35,12 +35,15 @@ export class LoginComponent implements OnInit {
          (response) => {
            console.log("aaa: "+JSON.stringify(response));
            if(response.status === 200) {
-            this.toastr.success("Successfully logged in!");
+            
              this.authSvc.setTokenAuth(response.token);
             localStorage.setItem("email",response.email)
             localStorage.setItem("id",response.user_id)
 
-this.router.navigate(['/products'])
+setTimeout(() => {
+  
+this.toastr.success("Successfully logged in!");
+}, 500); this.router.navigate(['/products']);
 
 // this.router.navigate(['/products']);
 

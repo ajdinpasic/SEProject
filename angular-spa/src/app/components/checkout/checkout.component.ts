@@ -25,13 +25,13 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 this.checkoutForm = new FormGroup({
-      city: new FormControl('',[Validators.required,Validators.maxLength(10)]),
-        country: new FormControl('',[Validators.required,Validators.maxLength(10)]),
-           zip: new FormControl('',[Validators.required,Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-          address: new FormControl('',[Validators.required,Validators.maxLength(10)]),
-           first: new FormControl('',[Validators.required,Validators.maxLength(10)]),
-          last: new FormControl('',[Validators.required,Validators.maxLength(10)]),
-           mobile: new FormControl('',[Validators.required,Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+      city: new FormControl('',[Validators.required,Validators.maxLength(20)]),
+        country: new FormControl('',[Validators.required,Validators.maxLength(20)]),
+           zip: new FormControl('',[Validators.required,Validators.maxLength(20),Validators.pattern(/^-?(0|[1-9]\d*)*?$/)]),
+          address: new FormControl('',[Validators.required,Validators.maxLength(20)]),
+           first: new FormControl('',[Validators.required,Validators.maxLength(20)]),
+          last: new FormControl('',[Validators.required,Validators.maxLength(20)]),
+           mobile: new FormControl('',[Validators.required,Validators.maxLength(20),Validators.pattern(/^-?(0|[1-9]\d*)*?$/)]),
     });
      this.logoSvc.getCheckoutInfo();
   }
