@@ -48,7 +48,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addItemToCartWithQuantity(product: Product) {
-    this.cartSvc.addItemToCartWithQuantity(product,this.amountChoosen);
+    this.cartSvc.addItemToCart(product,true,this.amountChoosen);
   }
 
   increase() {

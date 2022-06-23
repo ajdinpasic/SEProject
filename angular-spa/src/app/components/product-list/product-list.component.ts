@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
   products : Product[];
   productSearch: any;
   response: Product[];
+  paginationPageNumber: number = 1;
   constructor(private productListSvc: ProductListService, private cartSvc: CartService, private router: Router, private toastr: ToastrService, private filtersSvc: FilterService) { 
     
   }
