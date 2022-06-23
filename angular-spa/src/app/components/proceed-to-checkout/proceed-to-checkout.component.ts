@@ -35,7 +35,7 @@ export class ProceedToCheckoutComponent implements OnInit {
     this.cartSvc.changeCartSummary.subscribe(
      
       () => {
-        this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":2}).subscribe(
+        this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
       (response:any) => {
         console.log(response)
           this.products = response;
