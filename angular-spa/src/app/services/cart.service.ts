@@ -28,10 +28,14 @@ export class CartService {
     return this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id});
   }
 
-  addItemToCart(product: Product) {
+  addItemToCart(product: Product,moreThanOne:boolean=false,moreQuantity: number = 0) {
     let user_id = this.authSvc.getUserIdAuth();
+    var quantityToSend = 1;
+    if (moreThanOne) {
+      quantityToSend = moreQuantity;
+    }
 
-  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":1,"product_id":product.product_id,"user_id":user_id}).subscribe(
+  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":quantityToSend,"product_id":product.product_id,"user_id":user_id}).subscribe(
      (response) => {
        console.log(response)
        if(response.status === 200 || response.status === 201) {

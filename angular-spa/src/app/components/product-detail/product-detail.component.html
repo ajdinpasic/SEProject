@@ -13,14 +13,7 @@
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">{{product[0].name}}</h3>
             <div class="d-flex mb-3">
-                <div class="text-primary mr-2">
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star-half-alt"></small>
-                    <small class="far fa-star"></small>
-                </div>
-                <small class="pt-1">(50 Reviews)</small>
+                <small class="pt-1">{{reviews.length}} reviews for this product</small>
             </div>
             <h3 class="font-weight-semi-bold mb-4">${{product[0].price}}</h3>
             <div class="d-flex mb-3">
@@ -37,7 +30,7 @@
                 
             </div>
             <div class="d-flex mb-4">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Color: <span style="font-weight: normal;">{{product[0].color}}</span></p>
+                <p class="text-dark font-weight-medium mb-0 mr-3">Gender: <span style="font-weight: normal;">{{product[0].gender}}</span></p>
             </div>
             <div class="d-flex align-items-center mb-4 pt-2">
                 <div class="input-group quantity mr-3" style="width: 130px;">
@@ -48,12 +41,12 @@
                     </div>
                     <input type="text" class="form-control bg-secondary text-center" [(ngModel)]="amountChoosen" disabled>
                     <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus" (click)="increase()" [disabled]="amountChoosen >= product.quantity">
+                        <button class="btn btn-primary btn-plus" (click)="increase()" [disabled]="amountChoosen >= product[0].quantity">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3" (click)="addItemToCartWithQuantity(product)" [disabled]="product.quantity <=0"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+                <button class="btn btn-primary px-3" (click)="addItemToCartWithQuantity(product[0])" [disabled]="product[0].quantity <=0"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart
                 </button>
             </div>
         </div>
