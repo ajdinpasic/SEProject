@@ -35,7 +35,7 @@ export class LogoService {
          this.toastr.success("Successful purchase!Thank you!");
       }
      )
-    //  this.router.navigate(['/products']);
+     this.router.navigate(['/products']);
   }
 
   makeOrder() {
@@ -92,7 +92,7 @@ export class LogoService {
     let total = 0;
     let quantity = 0;
     this.productsToBuy = products;
-products.forEach(element => {
+    products.forEach(element => {
 
       total+=element.price;
       total*=element.current_quantity;
