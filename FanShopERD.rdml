@@ -3,7 +3,7 @@
   <ModelProperties>
     <RowOne>0</RowOne>
     <SchemaVersion>8</SchemaVersion>
-    <LastEditTimeStamp>2022-05-07T20:40:26.7964574+02:00</LastEditTimeStamp>
+    <LastEditTimeStamp>2022-06-24T11:39:12.9890267+02:00</LastEditTimeStamp>
     <Name>New Model</Name>
     <Author>DESKTOP-FFU2078\Ajdin</Author>
     <UniqueId>4d3aad52-32d8-419d-9f1b-e4e07f499623</UniqueId>
@@ -25,7 +25,7 @@
         <ModelTableColumnId>0</ModelTableColumnId>
         <Sequence>0</Sequence>
         <Name>cart_id</Name>
-        <DataTypeName>uniqueidentifier</DataTypeName>
+        <DataTypeName>int</DataTypeName>
       </ModelTableColumn>
       <ModelTableColumn>
         <ModelTableId>5</ModelTableId>
@@ -185,14 +185,16 @@
         <ModelTableColumnId>2</ModelTableColumnId>
         <Sequence>2</Sequence>
         <Name>color</Name>
-        <DataTypeName>int</DataTypeName>
+        <DataTypeName>nvarchar</DataTypeName>
+        <Width>50</Width>
       </ModelTableColumn>
       <ModelTableColumn>
         <ModelTableId>2</ModelTableId>
         <ModelTableColumnId>3</ModelTableColumnId>
         <Sequence>3</Sequence>
         <Name>size</Name>
-        <DataTypeName>int</DataTypeName>
+        <DataTypeName>nvarchar</DataTypeName>
+        <Width>50</Width>
       </ModelTableColumn>
       <ModelTableColumn>
         <ModelTableId>2</ModelTableId>
@@ -206,7 +208,8 @@
         <ModelTableColumnId>5</ModelTableColumnId>
         <Sequence>5</Sequence>
         <Name>gender</Name>
-        <DataTypeName>int</DataTypeName>
+        <DataTypeName>nvarchar</DataTypeName>
+        <Width>50</Width>
       </ModelTableColumn>
       <ModelTableColumn>
         <ModelTableId>2</ModelTableId>
@@ -333,6 +336,7 @@
         <ModelTableColumnId>5</ModelTableColumnId>
         <Sequence>5</Sequence>
         <Name>order_address</Name>
+        <AllowNull>true</AllowNull>
         <DataTypeName>nvarchar</DataTypeName>
         <Width>200</Width>
       </ModelTableColumn>
@@ -498,6 +502,13 @@
         <Name>product_id</Name>
         <DataTypeName>int</DataTypeName>
       </ModelTableColumn>
+      <ModelTableColumn>
+        <ModelTableId>8</ModelTableId>
+        <ModelTableColumnId>5</ModelTableColumnId>
+        <Sequence>5</Sequence>
+        <Name>grade</Name>
+        <DataTypeName>int</DataTypeName>
+      </ModelTableColumn>
       <ModelRelationship>
         <ParentModelTableId>1</ParentModelTableId>
         <ModelTableIndexId>0</ModelTableIndexId>
@@ -637,6 +648,22 @@
         <Name>date_created</Name>
         <DataTypeName>datetime2</DataTypeName>
         <Scale>7</Scale>
+      </ModelTableColumn>
+      <ModelTableColumn>
+        <ModelTableId>1</ModelTableId>
+        <ModelTableColumnId>4</ModelTableColumnId>
+        <Sequence>5</Sequence>
+        <Name>email</Name>
+        <DataTypeName>nvarchar</DataTypeName>
+        <Width>50</Width>
+      </ModelTableColumn>
+      <ModelTableColumn>
+        <ModelTableId>1</ModelTableId>
+        <ModelTableColumnId>6</ModelTableColumnId>
+        <Sequence>6</Sequence>
+        <Name>token</Name>
+        <DataTypeName>nvarchar</DataTypeName>
+        <Width>50</Width>
       </ModelTableColumn>
       <ModelTableIndex>
         <ModelTableId>1</ModelTableId>
