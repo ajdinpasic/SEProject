@@ -56,7 +56,6 @@ class CoreModel {
         }
         con.query = util.promisify(con.query);
         let query = 'INSERT INTO ' + table + ' (' + propertyNames + ') VALUES (' + propertyValues + ')';
-
         return new Promise(function (resolve, reject) {
             global.con.query(query, (err, res) => {
                 if (err) {
@@ -90,9 +89,5 @@ class CoreModel {
         }
 
     }
-
-
-
-
 }
 module.exports = CoreModel;
