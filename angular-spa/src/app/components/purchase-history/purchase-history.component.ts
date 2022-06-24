@@ -17,7 +17,7 @@ export class PurchaseHistoryComponent implements OnInit {
   ngOnInit(): void {
     this.purchaseSvc.getPurchaseHistory().subscribe(
       (response) => {
-        console.log(response);
+       
         this.purchasedProducts = response;
         this.seperateProduct();
         this.finalizeOrders();
@@ -26,14 +26,11 @@ export class PurchaseHistoryComponent implements OnInit {
     )
   }
   seperateProduct() {
-    console.log("aaa")
+    
     this.purchasedProducts.forEach(element => {
       this.individualOrders.push({"name":element.name,"image":element.image})
     })
-    // for(let i=0;i<this.purchasedProducts.length;i++) {
-    //   this.individualOrders[i] = ({"name":this.purchasedProducts[i].name,"image":this.purchasedProducts[i].image})
-    // }
-    console.log("33: "+JSON.stringify(this.individualOrders))
+   
   }
 
   finalizeOrders() {
@@ -46,10 +43,7 @@ export class PurchaseHistoryComponent implements OnInit {
   }
   finalizeSeperate() {
     this.individualOrders.forEach(element => {
-      let found = this.individualOrdersFinal.find(temp => temp.name == element.name);
-      //  if(!(element  in this.individualOrdersFinal)) {
-      //         this.individualOrdersFinal.push(element)
-      //  }  
+      let found = this.individualOrdersFinal.find(temp => temp.name == element.name); 
       if(!found) {
         this.individualOrdersFinal.push(element)
       }

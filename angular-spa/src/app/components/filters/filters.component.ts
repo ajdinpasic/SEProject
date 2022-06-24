@@ -18,7 +18,7 @@ export class FiltersComponent implements OnInit {
     
    this.http.get<any>(GlobalHttpsCaller.apiRootLocal+'subcategory',{}).subscribe(
     (response) => {
-      console.log(response)
+      
       this.subCategory = response;
     }
    )
@@ -63,39 +63,35 @@ export class FiltersComponent implements OnInit {
                 order = temp.value; break;
             }}
             if(order === 'Ascending') {
-              console.log("ovdje1")
+              
               order=null;
             }
             if(subcategory === 'none') {
               subcategory = null;
-               console.log("ovdje2")
+               
             }
              if(color === 'none') {
               color = null;
-               console.log("ovdje3")
+               
             }
              if(order === 'none') {
               order = null;
-               console.log("ovdje4")
+               
             }
              if(size === 'none') {
               size = null;
-               console.log("ovdje5")
+               
             }
              if(price === 'none') {
               price = null;
-               console.log("ovdje6")
+               
             }
             this.filtersSvc.setColor(color);
             this.filtersSvc.setOrder(order);
             this.filtersSvc.setPrice(price);
             this.filtersSvc.setSubCategory(subcategory);
             this.filtersSvc.setSize(size);
-            // let search;
-            // if(search.length === 0 || search || search == null) {
-            //    search = null;
-            // }
-            // console.log("ovo ovdje gledaj 33: "+search)
+            
             this.filtersSvc.filterProductsAsync(subcategory,price,color,size,order,null)
           
   }

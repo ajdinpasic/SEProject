@@ -19,7 +19,6 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent, canActivate: [GuestGuard]},
   {path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
   {path: 'history',component: PurchaseHistoryComponent, canActivate: [AuthGuard]}
-//   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 
 @NgModule({

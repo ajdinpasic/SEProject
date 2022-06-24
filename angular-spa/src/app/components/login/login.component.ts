@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       }
       this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'login',{"email":this.emailModel, "password":this.passwordModel}).subscribe(
          (response) => {
-           console.log("aaa: "+JSON.stringify(response));
+          
            if(response.status === 200) {
             
              this.authSvc.setTokenAuth(response.token);
@@ -45,7 +45,6 @@ setTimeout(() => {
 this.toastr.success("Successfully logged in!");
 }, 500); this.router.navigate(['/products']);
 
-// this.router.navigate(['/products']);
 
            } else if(response.status === 400) {
              this.toastr.error("Wrong creditentials!")

@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
       }
     	  this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'register',{"first_name":this.firstNameModel, "last_name":this.lastNameModel, "email":this.emailModel, "password":this.passwordModel}).subscribe(
          (response) => {
-           console.log("aaa: "+JSON.stringify(response));
+         
            if(response.status === 200) {
             this.toastr.success("Account created! You can login now!");
            setTimeout(() => {

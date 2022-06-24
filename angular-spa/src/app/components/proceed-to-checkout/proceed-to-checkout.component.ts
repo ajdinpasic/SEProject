@@ -22,7 +22,7 @@ export class ProceedToCheckoutComponent implements OnInit {
     let user_id = this.authSvc.getUserIdAuth();
     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
       (response:any) => {
-        console.log(response)
+       
           this.products = response;
           this.products.forEach(element => {
             this.subtotal= this.subtotal + (element.current_quantity * element.price);
@@ -31,13 +31,13 @@ export class ProceedToCheckoutComponent implements OnInit {
       }
     );
 
-    //
+    
     this.cartSvc.changeCartSummary.subscribe(
      
       () => {
         this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
       (response:any) => {
-        console.log(response)
+      
           this.products = response;
           this.total = 0;
           this.subtotal = 0;

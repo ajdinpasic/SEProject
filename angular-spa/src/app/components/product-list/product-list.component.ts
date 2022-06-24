@@ -22,11 +22,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.productListSvc.getAllProducts().subscribe((response:Product[]) => {
-    //   // this.productListSvc.setProductsForSearch(response)
-    //   this.products = response;
-    //   this.response = response;
-    // }) 
+
     this.filtersSvc.filtersApplied.subscribe(
       (response) => {
         this.products = response;

@@ -23,10 +23,7 @@ export class LogoService {
   getSearch() {
     return this.search
   }
-/*
-   if user buys this, delete cart, update counter, make an order and add product by product to that order
 
-*/
   emptyCartAfter() {
     let user_id = this.authSvc.getUserIdAuth();
      this.http.delete<any>(GlobalHttpsCaller.apiRootLocal+'deleteCart/'+user_id).subscribe(
@@ -49,11 +46,6 @@ export class LogoService {
       (response) => {
         let order_id = response.order_id;
 
-          // this.purchaseProducts(order_id);
-    //       this.productsToBuy.forEach(element => {
-    //   console.log("vrace");
-    //   this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity})
-    // });
     this.productsToBuy.forEach(element => {
       this.purchaseProducts(order_id,element)
     })
@@ -62,11 +54,6 @@ export class LogoService {
      )
   }
    purchaseProducts(order_id,element) {
-  //   console.log("bb: "+this.productsToBuy)
-  //   this.productsToBuy.forEach(element => {
-  //     console.log("vrace");
-  //     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity})
-  //   });
 
      this.http.post<any>(GlobalHttpsCaller.apiRootLocal+"purchase/item",{"product_order_item":order_id,"product_id":element.product_id,"quantity":element.current_quantity}).subscribe(
       (response) => {
@@ -80,7 +67,7 @@ export class LogoService {
      let user_id = this.authSvc.getUserIdAuth();
     this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'cart',{"user_id":user_id}).subscribe(
         (response) => {
-          console.log(response)
+         
             this.prepareCheckout(response);
         }
     );

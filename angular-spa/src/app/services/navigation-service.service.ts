@@ -8,10 +8,7 @@ import { GlobalHttpsCaller } from '../helpers/global.https';
 })
 export class NavigationServiceService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
-  // getAllCategories(): Observable<any> {
-    
-  // return this.http.get<any>(GlobalHttpsCaller.apiRootProd+'subcategory')
-  // }
+  
 }

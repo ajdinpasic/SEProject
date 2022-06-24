@@ -8,9 +8,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   constructor() { 
-    //  this.http.get(GlobalHttpsCaller.apiRootProd+'search').subscribe((response:any) => {
-    //   console.log(response)
-    // })
+    
   }
 
   isUserAuthorized() {

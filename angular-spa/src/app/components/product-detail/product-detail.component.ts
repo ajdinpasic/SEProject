@@ -29,7 +29,7 @@ export class ProductDetailComponent implements OnInit {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.productListSvc.getProduct(this.id).subscribe({
       next: (response:any) => {
-        console.log(response);
+     
       this.product = response;},
       error: (err) => this.toastr.error('No product to display')
     });

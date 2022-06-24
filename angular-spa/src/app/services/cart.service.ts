@@ -37,7 +37,7 @@ export class CartService {
 
   this.http.post<any>(GlobalHttpsCaller.apiRootLocal+'addProduct',{"current_quantity":quantityToSend,"product_id":product.product_id,"user_id":user_id}).subscribe(
      (response) => {
-       console.log(response)
+       
        if(response.status === 200 || response.status === 201) {
          this.toastr.success("Product added to your cart!");
         this.addedItemCartUpdateCounter.emit(this.countCartItems());
@@ -75,9 +75,4 @@ export class CartService {
    
   }
 
-  addItemToCartWithQuantity(product: Product, amount: number) {
-    // product.quantity = amount;
-    // this.cartProducts.push(product)
-    //  this.addedToCartWithQuantity.emit(new CartAddedUtil(this.cartProducts,amount));
-  }
 }

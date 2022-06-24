@@ -55,15 +55,11 @@ export class LogoHeaderComponent implements OnInit {
   
   }
   doBigSearch() {
-    console.log(this.keyWord);
+  
     if(this.keyWord.length === 0 || !this.keyWord || this.keyWord == null) {
       this.keyWord = null;
     }
-    // let subcategory = this.filterSvc.getSubCategory();
-    // let price = this.filterSvc.getPrice();
-    // let color = this.filterSvc.getColor();
-    // let size = this.filterSvc.getSize();
-    // let order = this.filterSvc.getOrder();
+    
     let search = this.keyWord;
     this.filterSvc.filterProductsAsync(null,null,null,null,null,search);
   }
